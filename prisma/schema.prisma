@@ -1,0 +1,49 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                 String    @id @default(auto()) @map("_id") @db.ObjectId
+  password           String
+  role               ROLE
+  needPasswordChange Boolean
+  passwordChangeAt   DateTime?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt()
+
+  @@map("users")
+}
+
+model Student {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  name          Name
+  gender        GENDER   @default(MALE)
+  dateOfBirth   DateTime
+  admissionYear Int
+
+  email     String?
+  contactNo String?
+}
+
+type Name {
+  firstName  String
+  middleName String?
+  lastName   String
+}
+
+enum GENDER {
+  MALE
+  FEMELE
+}
+
+enum ROLE {
+  ADMIN
+  TEACHER
+  GUARDIAN
+  STUDENT
+}
