@@ -13,27 +13,64 @@ model User {
   role               ROLE
   needPasswordChange Boolean
   passwordChangeAt   DateTime?
-  createdAt          DateTime  @default(now())
-  updatedAt          DateTime  @updatedAt()
+  studentId          String?   @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt()
 
   @@map("users")
 }
 
 model Student {
-  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  id            String      @id @default(auto()) @map("_id") @db.ObjectId
+  studentId     String      @unique
   name          Name
-  gender        GENDER   @default(MALE)
+  gender        GENDER
   dateOfBirth   DateTime
   admissionYear Int
+  guardian      GUARDIAN
+  email         String?
+  contactNo     String?
+  bloodGroup    BLOOD_GROUP
 
-  email     String?
-  contactNo String?
+  className        String
+  classRoll        String
+  section          String
+  schoolName       String
+  image            String?
+  address          String
+  shortDescription String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt()
+
+  @@map("students")
 }
 
 type Name {
   firstName  String
   middleName String?
   lastName   String
+}
+
+type GUARDIAN {
+  fatherName       String
+  fatherOccupation String
+  fatherContactNo  String
+  motherName       String
+  motherOccupation String
+  motherContactNo  String
+}
+
+enum BLOOD_GROUP {
+  A_POSITIVE  @map("A+")
+  A_NEGETIVE  @map("A-")
+  B_POSITIVE  @map("B+")
+  B_NEGETIVE  @map("B-")
+  AB_POSITIVE @map("AB+")
+  AB_NEGETIVE @map("AB-")
+  O_POSITIVE  @map("O+")
+  O_NEGETIVE  @map("O-")
 }
 
 enum GENDER {
