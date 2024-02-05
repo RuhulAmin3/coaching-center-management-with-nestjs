@@ -2,22 +2,25 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { SwaggerSetup } from './swagger-setup';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
 
-  const port = configService.get('APP.port');
-  const globalPrefix = configService.get('APP.global_prefix');
+  const { port, global_prefix } = configService.get('APP');
 
-  app.setGlobalPrefix(globalPrefix);
+  app.setGlobalPrefix(global_prefix);
 
   app.useGlobalPipes(
     new ValidationPipe({
       transform: true,
       stopAtFirstError: true,
+      whitelist: true,
     }),
   );
+
+  SwaggerSetup(app, configService);
 
   await app.listen(port);
 }

@@ -14,9 +14,11 @@ model User {
   needPasswordChange Boolean
   passwordChangeAt   DateTime?
   studentId          String?   @unique
+  teacherId          String?   @unique
+  guardianId         String?   @unique
 
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt()
+  updatedAt DateTime @updatedAt
 
   @@map("users")
 }
@@ -42,7 +44,7 @@ model Student {
   shortDescription String?
 
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt()
+  updatedAt DateTime @updatedAt
 
   @@map("students")
 }
