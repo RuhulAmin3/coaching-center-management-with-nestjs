@@ -1,6 +1,7 @@
 import { INestApplication } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { CreateStudentDTO } from './modules/user/dto/create-student.dto';
 
 export const SwaggerSetup = (
   app: INestApplication,
@@ -19,6 +20,7 @@ export const SwaggerSetup = (
 
   const document = SwaggerModule.createDocument(app, config, {
     ignoreGlobalPrefix: false,
+    extraModels: [CreateStudentDTO],
   });
   SwaggerModule.setup(path, app, document);
 };

@@ -1,4 +1,8 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import {
+  ApiProperty,
+  ApiPropertyOptional,
+  ApiResponseProperty,
+} from '@nestjs/swagger';
 import { BLOOD_GROUP, GENDER } from '@prisma/client';
 import { Type } from 'class-transformer';
 import {
@@ -63,7 +67,12 @@ export class GuardianDTO {
 }
 
 export class CreateStudentDTO {
+  @ApiResponseProperty()
   @IsOptional()
+  id: string;
+
+  @IsOptional()
+  @ApiProperty()
   studentId: string;
 
   @ValidateNested()
