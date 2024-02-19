@@ -76,8 +76,8 @@ enum BLOOD_GROUP {
 }
 
 enum GENDER {
-  MALE
-  FEMELE
+  Male
+  Female
 }
 
 enum ROLE {

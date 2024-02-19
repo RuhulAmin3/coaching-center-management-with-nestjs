@@ -3,6 +3,7 @@ import { DATABASE_CONFIG } from './database.config';
 import { JWT_CONFIG } from './jwt.config';
 import { SWAGGER_CONFIG } from './swagger.config';
 import { USER_CONFIG } from './user.config';
+import { CLOUDINARY_CONFIG } from './cloudinary.config';
 
 export default [
   APP_CONFIG,
@@ -10,4 +11,5 @@ export default [
   JWT_CONFIG,
   USER_CONFIG,
   SWAGGER_CONFIG,
+  CLOUDINARY_CONFIG,
 ];

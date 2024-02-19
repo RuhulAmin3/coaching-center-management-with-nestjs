@@ -3,9 +3,11 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { SwaggerSetup } from './swagger-setup';
+import { NestExpressApplication } from '@nestjs/platform-express';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+
   const configService = app.get(ConfigService);
 
   const { port, global_prefix } = configService.get('APP');
@@ -24,4 +26,5 @@ async function bootstrap() {
 
   await app.listen(port);
 }
+
 bootstrap();
