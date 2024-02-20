@@ -7,17 +7,19 @@ import configuration from './config/configuration';
 import { PrismaModule } from './modules/prisma/prisma.module';
 import { UserModule } from './modules/user/user.module';
 import { CloudinaryModule } from './modules/cloudinary/cloudinary.module';
+import { SubjectModule } from './modules/subject/subject.module';
 
 @Module({
   imports: [
     AuthModule,
+    UserModule,
+    SubjectModule,
     ConfigModule.forRoot({
       load: configuration,
       isGlobal: true,
       expandVariables: true,
     }),
     PrismaModule,
-    UserModule,
     CloudinaryModule,
   ],
   controllers: [AppController],

@@ -12,8 +12,9 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiTags } from '@nestjs/swagger';
 import { JsonParseInterceptor } from 'src/common/interceptors/jsonParseInterceptor';
 import { multerOptions } from 'src/common/multerOptions/multerOptions';
-import { apiResponse } from 'src/shared/api-response';
+import { apiResponse } from 'src/utils/api-response';
 import { CreateTeacherDTO } from './dto/create-teacher.dto';
+import { CreateGuardianDTO } from './dto/create-guardian.dto';
 
 @Controller('/user')
 @ApiTags('User')
@@ -63,6 +64,30 @@ export class UserController {
       statusCode: HttpStatus.CREATED,
       data: result,
       message: 'teacher created successfully',
+    });
+    return responseObj;
+  }
+
+  @Post('/guardian')
+  @UseInterceptors(
+    FileInterceptor('file', multerOptions),
+    new JsonParseInterceptor('guardian'),
+  )
+  async createGuardian(
+    @UploadedFile() file: Express.Multer.File,
+    @Body('guardian') guardian: CreateGuardianDTO,
+  ) {
+    const { password, ...restData } = guardian;
+    const result = await this.userService.createGuardian(
+      restData,
+      file,
+      password,
+    );
+
+    const responseObj = apiResponse<Omit<CreateGuardianDTO, 'password'>>({
+      statusCode: HttpStatus.CREATED,
+      data: result,
+      message: 'guardian created successfully',
     });
     return responseObj;
   }

@@ -1,11 +1,14 @@
 type IApiResponse<T> = {
+  success?: true;
   statusCode: number;
   message?: string | null;
-  success?: true;
+
   meta?: {
     page?: number;
     limit?: number;
     total?: number;
+    totalDoc?: number;
+    totalPages?: number;
     prevPage?: number;
     nextpage?: number;
   };
@@ -17,7 +20,7 @@ export const apiResponse = <T>(data: IApiResponse<T>) => {
     success: true,
     statusCode: data.statusCode,
     message: data.message || null,
-    meta: data.meta,
+    meta: data.meta || null,
     data: data.data || null,
   };
   return responseData;

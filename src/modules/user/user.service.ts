@@ -120,4 +120,46 @@ export class UserService {
       throw new BadRequestException(err);
     }
   }
+  async createGuardian(
+    guardianData: Prisma.GuardianCreateInput,
+    file: Express.Multer.File,
+    password: string,
+  ) {
+    // set user data
+    const userData: Prisma.UserCreateInput = {
+      password: password,
+      role: ROLE.GUARDIAN,
+      needPasswordChange: false,
+    };
+
+    // generate teacher Id
+    const guardianId = await this.userUtils.generateGuardianId();
+
+    userData['guardianId'] = guardianId;
+    guardianData.guardianId = guardianId;
+    try {
+      // const { secure_url } =
+      //   await this.cloudinaryService.uploadImageToCloud(file);
+      guardianData.image =
+        'https://res.cloudinary.com/dwykyqzzk/image/upload/v1708335326/zbsav7bbwwtvpvo70mkb.jpg';
+
+      const result = await this.prismaService.$transaction(async (tsx) => {
+        const user = await tsx.user.create({
+          data: userData,
+        });
+
+        guardianData['userId'] = user.id;
+
+        const createGuardian = await tsx.guardian.create({
+          data: guardianData,
+        });
+        return createGuardian;
+      });
+
+      return result;
+    } catch (err) {
+      console.log(err);
+      throw new BadRequestException(err);
+    }
+  }
 }
