@@ -1,9 +1,11 @@
-import { Student } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class UserUtils {
   constructor(private readonly prismaService: PrismaService) {}
-  generateStudentId(student: Student): string {
+  generateStudentId(student: Prisma.StudentCreateInput): string {
     const studentId = `S${student.section}${student.classRoll}-${student.className
       .substring(student.className.length - 2)
       .toUpperCase()}${student.admissionYear

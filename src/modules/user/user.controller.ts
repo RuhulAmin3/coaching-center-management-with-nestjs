@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  HttpStatus,
   Post,
   UploadedFile,
   UseInterceptors,
@@ -11,6 +12,8 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiTags } from '@nestjs/swagger';
 import { JsonParseInterceptor } from 'src/common/interceptors/jsonParseInterceptor';
 import { multerOptions } from 'src/common/multerOptions/multerOptions';
+import { apiResponse } from 'src/shared/api-response';
+import { CreateTeacherDTO } from './dto/create-teacher.dto';
 
 @Controller('/user')
 @ApiTags('User')
@@ -25,13 +28,42 @@ export class UserController {
   async createStudent(
     @UploadedFile() file: Express.Multer.File,
     @Body('student') student: CreateStudentDTO,
+    @Body('password') password: string,
   ) {
-    await this.userService.createStudent(student, file);
-    // const responseObj = apiResponse<CreateStudentDTO>({
-    //   statusCode: HttpStatus.CREATED,
-    //   data: result,
-    //   message: 'user created successfully',
-    // });
-    return { studentData: 'success' };
+    const result = await this.userService.createStudent(
+      student,
+      file,
+      password,
+    );
+    const responseObj = apiResponse<CreateStudentDTO>({
+      statusCode: HttpStatus.CREATED,
+      data: result,
+      message: 'student created successfully',
+    });
+    return responseObj;
+  }
+
+  @Post('/teacher')
+  @UseInterceptors(
+    FileInterceptor('file', multerOptions),
+    new JsonParseInterceptor('teacher'),
+  )
+  async createTeacher(
+    @UploadedFile() file: Express.Multer.File,
+    @Body('teacher') teacher: CreateTeacherDTO,
+    @Body('password') password: string,
+  ) {
+    const result = await this.userService.createTeacher(
+      teacher,
+      file,
+      password,
+    );
+
+    const responseObj = apiResponse<CreateTeacherDTO>({
+      statusCode: HttpStatus.CREATED,
+      data: result,
+      message: 'teacher created successfully',
+    });
+    return responseObj;
   }
 }
