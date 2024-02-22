@@ -42,6 +42,7 @@ export class SubjectService {
 
     return result;
   }
+
   async getAllSubject(searchOptions, paginationOptions) {
     const { page, limit, sortBy, sortOrder, skip } =
       calculatePagination(paginationOptions);

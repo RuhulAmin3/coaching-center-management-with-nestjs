@@ -105,16 +105,17 @@ model Subject {
   title     String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  classes   Class[]
 
   @@map("subjects")
 }
 
 model Class {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  className String @unique
+
   subjectIds String[] @db.ObjectId
-  subjects   Subject  @relation(fields: [subjectIds], references: [id])
-  studentIds String[] @default([])
+
+  studentIds String[] @default([]) // generating studentId by their data
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 

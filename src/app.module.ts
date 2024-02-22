@@ -8,12 +8,14 @@ import { PrismaModule } from './modules/prisma/prisma.module';
 import { UserModule } from './modules/user/user.module';
 import { CloudinaryModule } from './modules/cloudinary/cloudinary.module';
 import { SubjectModule } from './modules/subject/subject.module';
+import { ClassModule } from './modules/class/class.module';
 
 @Module({
   imports: [
     AuthModule,
     UserModule,
     SubjectModule,
+    ClassModule,
     ConfigModule.forRoot({
       load: configuration,
       isGlobal: true,
