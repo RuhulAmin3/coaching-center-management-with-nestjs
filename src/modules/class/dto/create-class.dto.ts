@@ -1,5 +1,11 @@
 import { PartialType } from '@nestjs/mapped-types';
-import { IsArray, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import {
+  ArrayMinSize,
+  IsArray,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 export class CreateClassDTO {
   @IsString()
@@ -8,6 +14,7 @@ export class CreateClassDTO {
 
   @IsArray()
   @IsNotEmpty({ message: 'subjects is required' })
+  @ArrayMinSize(1)
   subjectIds: string[];
 
   @IsOptional()

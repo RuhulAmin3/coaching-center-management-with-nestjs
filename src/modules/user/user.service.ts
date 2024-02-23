@@ -45,6 +45,20 @@ export class UserService {
     }
     userData['studentId'] = studentId;
     studentData.studentId = studentId;
+
+    // check class exist or not
+    const isClassExist = await this.prismaService.class.findUnique({
+      where: {
+        className: studentData.className,
+      },
+    });
+
+    if (!isClassExist) {
+      throw new BadRequestException(
+        'class does not exist. First of all you have to create class then add students.',
+      );
+    }
+
     try {
       // const { secure_url } =
       //   await this.cloudinaryService.uploadImageToCloud(file);
@@ -62,6 +76,16 @@ export class UserService {
           data: studentData,
         });
 
+        await tsx.class.update({
+          where: {
+            className: studentData.className,
+          },
+          data: {
+            studentIds: {
+              set: [...isClassExist.studentIds, studentId],
+            },
+          },
+        });
         // remove password from user
         // if (createdStudent?.user) {
         //   const userExceptPassword = excludeField(createdStudent.user, [

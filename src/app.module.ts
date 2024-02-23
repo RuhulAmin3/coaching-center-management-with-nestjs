@@ -9,6 +9,8 @@ import { UserModule } from './modules/user/user.module';
 import { CloudinaryModule } from './modules/cloudinary/cloudinary.module';
 import { SubjectModule } from './modules/subject/subject.module';
 import { ClassModule } from './modules/class/class.module';
+import { ExamModule } from './modules/exam/exam.module';
+import { StudentModule } from './modules/student/student.module';
 
 @Module({
   imports: [
@@ -16,6 +18,8 @@ import { ClassModule } from './modules/class/class.module';
     UserModule,
     SubjectModule,
     ClassModule,
+    ExamModule,
+    StudentModule,
     ConfigModule.forRoot({
       load: configuration,
       isGlobal: true,

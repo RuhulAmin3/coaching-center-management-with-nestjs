@@ -26,8 +26,8 @@ model User {
 }
 
 model Student {
-  id               String      @id @default(auto()) @map("_id") @db.ObjectId
-  studentId        String      @unique
+  id               String                 @id @default(auto()) @map("_id") @db.ObjectId
+  studentId        String                 @unique
   name             Name
   gender           GENDER
   dateOfBirth      DateTime
@@ -36,6 +36,7 @@ model Student {
   email            String?
   contactNo        String?
   bloodGroup       BLOOD_GROUP
+  status           STUDENT_ACCOUNT_STATUS @default(Active)
   className        String
   classRoll        String
   section          String
@@ -118,8 +119,28 @@ model Class {
   studentIds String[] @default([]) // generating studentId by their data
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
+  exams      Exam[]
 
   @@map("classes")
+}
+
+model Exam {
+  id       String        @id @default(auto()) @map("_id") @db.ObjectId
+  title    String
+  date     DateTime
+  class    Class         @relation(fields: [classId], references: [id])
+  classId  String        @db.ObjectId
+  subjects ExamSubject[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("exams")
+}
+
+type ExamSubject {
+  totalMark Int
+  subjectId String @db.ObjectId
 }
 
 type EducationalQualificationType {
@@ -149,6 +170,12 @@ enum GUARDIAN_ACCOUNT_STATUS {
   Pending
   Approve
   Reject
+  Block
+}
+
+enum STUDENT_ACCOUNT_STATUS {
+  Active
+  Inacitve
   Block
 }
 

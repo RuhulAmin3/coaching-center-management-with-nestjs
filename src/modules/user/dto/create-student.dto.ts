@@ -1,9 +1,10 @@
+import { PartialType } from '@nestjs/mapped-types';
 import {
   ApiProperty,
   ApiPropertyOptional,
   ApiResponseProperty,
 } from '@nestjs/swagger';
-import { BLOOD_GROUP, GENDER } from '@prisma/client';
+import { BLOOD_GROUP, GENDER, STUDENT_ACCOUNT_STATUS } from '@prisma/client';
 import { Type } from 'class-transformer';
 import {
   IsDate,
@@ -86,6 +87,11 @@ export class CreateStudentDTO {
   @ApiProperty({ enum: Object.keys(GENDER) })
   gender: GENDER;
 
+  @IsIn(Object.keys(STUDENT_ACCOUNT_STATUS))
+  @IsNotEmpty({ message: 'status must be required' })
+  @ApiProperty({ enum: Object.keys(STUDENT_ACCOUNT_STATUS) })
+  status: STUDENT_ACCOUNT_STATUS;
+
   @IsDate({ message: 'date of birth must be in date format' })
   @IsNotEmpty({ message: 'date of birth is required' })
   @Type(() => Date)
@@ -152,3 +158,5 @@ export class CreateStudentDTO {
   @ApiPropertyOptional()
   shortDescription: string;
 }
+
+export class UpdateStudentDTO extends PartialType(CreateStudentDTO) {}
