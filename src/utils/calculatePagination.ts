@@ -27,3 +27,14 @@ export const calculatePagination = (options: IOptions): IReturnOptions => {
     sortOrder,
   };
 };
+
+export const PaginationMetaData = (
+  page: number,
+  totalDoc: number,
+  limit: number,
+) => {
+  const totalPages = Math.ceil(totalDoc / +limit);
+  const nextPage = page < totalPages ? page + 1 : null;
+  const prevPage = page > 1 ? page - 1 : null;
+  return { totalPages, nextPage, prevPage };
+};

@@ -73,9 +73,10 @@
 
 - /api/v1/exam (POST) ====> create exam api endpoint.
 
-- /api/v1/exam (get) ====> get all exam api endpoint by search, filter and pagination.(search by title, className and filter by title and classId)
+- /api/v1/exam (get) ====> get all exam api endpoint by search, filter and pagination.  
+  (search by title, className and filter by title and classId)
   search_query:searchTerm=title&className (e.g exam?searchTerm=weekly Exam, exam?searchTerm=nine)
-  filter_query:title=title text&classId=mongodbId (e.g exam?title=Monthly Exam&classId=65d81233300545d443ecf489)
+  filter_query:title=title &classId=classId (e.g exam?title=Monthly Exam&classId=65d81233300545d443ecf489)
 
 - /api/v1/exam/:id (GET) ====> get single exam api endpoint.
 - /api/v1/exam/:id (patch) ====> update specific exam api endpoint.
@@ -85,11 +86,23 @@
 
 - /api/v1/student (GET) ====> get all student api endpoint by search, filter and pagination.
   search_query:searchTerm=studentId&className&classRoll&schoolName (e.g student?searchTerm=eleven, searchTerm=SB11-EN21)
-  filter_query:title=studentId&gender&className&classRoll&schoolName&bloodGroup&admissionYear&status (e.g class?className=Eleven&admissionYear=2021)
+  filter_query:fieldName=studentId&gender&className&classRoll&schoolName&bloodGroup&admissionYear&status (e.g class?className=Eleven&admissionYear=2021)
 
 - /api/v1/student/:id (GET) ====> get single student api endpoint.
 - /api/v1/student/:id (patch) ====> update specific student api endpoint.
 - /api/v1/student/:id (delete) ====> delete student api endpoint.
+
+#### Teacher Api
+
+- /api/v1/teacher (GET) ====> get all teacher api endpoint by search, filter and pagination.
+  search_query:searchTerm=teacherId&email&designation&contactNo (e.g teacher?searchTerm=T-00001, searchTerm=math teacher)
+  filter_query:fieldName=teacherId&gender&email&designation&subject&conatactNo&salary&type (e.g teacher?teacherId=T-00001&type=monthly)
+
+- /api/v1/teacher/:id (GET) ====> get single teacher api endpoint.
+- /api/v1/teacher/:id (patch) ====> update specific teacher api endpoint.
+- /api/v1/teacher/:id (delete) ====> delete teacher api endpoint.
+
+<<===============================================================================>>
 
 #### Auth / User api
 

@@ -102,6 +102,7 @@ export class UserService {
       throw new BadRequestException(err);
     }
   }
+
   async createTeacher(
     teacherData: Prisma.TeacherCreateInput,
     file: Express.Multer.File,
@@ -114,6 +115,16 @@ export class UserService {
         : this.configService.get('USER.teacher_pass'),
       role: ROLE.TEACHER,
     };
+
+    const isExist = await this.prismaService.teacher.findUnique({
+      where: { email: teacherData.email },
+    });
+
+    if (isExist) {
+      throw new ConflictException(
+        'teacher already exist! try with another email',
+      );
+    }
 
     // generate teacher Id
     const teacherId = await this.userUtils.generateTeacherId();

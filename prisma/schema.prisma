@@ -58,12 +58,13 @@ model Teacher {
   teacherId                String                       @unique
   name                     Name
   gender                   GENDER
-  email                    String
+  email                    String                       @unique
   contactNo                String
   bloodGroup               BLOOD_GROUP
   designation              String
   salary                   Int
   subject                  String
+  type                     TEACHER_TYPE                 @default(Monthly)
   educationalQualification EducationalQualificationType
   image                    String
   dateOfBirth              DateTime
@@ -177,6 +178,12 @@ enum STUDENT_ACCOUNT_STATUS {
   Active
   Inacitve
   Block
+}
+
+enum TEACHER_TYPE {
+  Monthly
+  Contractual
+  Daily
 }
 
 enum BLOOD_GROUP {

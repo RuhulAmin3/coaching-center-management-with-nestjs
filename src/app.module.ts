@@ -11,6 +11,7 @@ import { SubjectModule } from './modules/subject/subject.module';
 import { ClassModule } from './modules/class/class.module';
 import { ExamModule } from './modules/exam/exam.module';
 import { StudentModule } from './modules/student/student.module';
+import { TeacherModule } from './modules/teacher/teacher.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { StudentModule } from './modules/student/student.module';
     ClassModule,
     ExamModule,
     StudentModule,
+    TeacherModule,
     ConfigModule.forRoot({
       load: configuration,
       isGlobal: true,

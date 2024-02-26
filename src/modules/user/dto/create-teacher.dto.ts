@@ -17,6 +17,7 @@ import {
 } from 'class-validator';
 import { NameDTO } from './create-student.dto';
 import { BLOOD_GROUP, GENDER } from '@prisma/client';
+import { PartialType } from '@nestjs/mapped-types';
 
 class EducationalQualificationDTO {
   @ApiProperty()
@@ -63,6 +64,7 @@ export class CreateTeacherDTO {
   gender: GENDER;
 
   @IsEmail()
+  @IsNotEmpty({ message: 'Email is required' })
   @ApiProperty()
   email: string;
 
@@ -116,3 +118,5 @@ export class CreateTeacherDTO {
   @ApiPropertyOptional()
   shortDescription: string;
 }
+
+export class UpdateTeacherDTO extends PartialType(CreateTeacherDTO) {}
