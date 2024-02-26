@@ -27,7 +27,7 @@ export class TeacherControler {
   @Get()
   @ApiOkResponse({ type: [CreateTeacherDTO] })
   @ApiOperation({ description: 'get all teachers endpoints' })
-  async getAllStudent(@Query() query: Record<string, any>) {
+  async getAllTeacher(@Query() query: Record<string, any>) {
     const paginationsFields = queryPick(query, paginationOptions);
     const searchOptions = queryPick(query, teacherFilterAbleField);
 
@@ -62,7 +62,7 @@ export class TeacherControler {
   @Patch('/:id')
   @ApiOkResponse({ type: [CreateTeacherDTO] })
   @ApiOperation({ description: 'update teacher endpoints' })
-  async updateStudent(@Param('id') id: string, @Body() data: UpdateTeacherDTO) {
+  async updateTeacher(@Param('id') id: string, @Body() data: UpdateTeacherDTO) {
     const result = await this.teacherService.updateTeacher(id, data);
 
     const response = apiResponse({
@@ -76,7 +76,7 @@ export class TeacherControler {
   @Delete('/:id')
   @ApiOkResponse()
   @ApiOperation({ description: 'delete teacher endpoints' })
-  async deleteStudent(@Param('id') id: string) {
+  async deleteTeacher(@Param('id') id: string) {
     const result = await this.teacherService.deleteTeacher(id);
 
     const response = apiResponse({

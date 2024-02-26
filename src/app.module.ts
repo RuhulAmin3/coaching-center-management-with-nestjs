@@ -12,6 +12,7 @@ import { ClassModule } from './modules/class/class.module';
 import { ExamModule } from './modules/exam/exam.module';
 import { StudentModule } from './modules/student/student.module';
 import { TeacherModule } from './modules/teacher/teacher.module';
+import { GuardianModule } from './modules/guardian/guardian.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { TeacherModule } from './modules/teacher/teacher.module';
     ExamModule,
     StudentModule,
     TeacherModule,
+    GuardianModule,
     ConfigModule.forRoot({
       load: configuration,
       isGlobal: true,

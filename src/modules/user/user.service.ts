@@ -156,7 +156,7 @@ export class UserService {
     }
   }
   async createGuardian(
-    guardianData: Prisma.GuardianCreateInput,
+    guardianData,
     file: Express.Multer.File,
     password: string,
   ) {
@@ -167,11 +167,26 @@ export class UserService {
       needPasswordChange: false,
     };
 
+    // check guardian account exist or not
+    const isGuardianAccountExist = await this.prismaService.guardian.findFirst({
+      where: {
+        students: {
+          hasSome: guardianData.students,
+        },
+      },
+    });
+
     // generate teacher Id
     const guardianId = await this.userUtils.generateGuardianId();
 
     userData['guardianId'] = guardianId;
     guardianData.guardianId = guardianId;
+
+    if (isGuardianAccountExist) {
+      throw new ConflictException(
+        'guardian account already exist for the students',
+      );
+    }
     try {
       // const { secure_url } =
       //   await this.cloudinaryService.uploadImageToCloud(file);

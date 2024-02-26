@@ -84,7 +84,7 @@ model Guardian {
   guardianId       String                  @unique
   name             Name
   gender           GENDER
-  email            String
+  email            String?
   contactNo        String
   occupation       String
   bloodGroup       BLOOD_GROUP
@@ -169,8 +169,7 @@ type GUARDIAN {
 
 enum GUARDIAN_ACCOUNT_STATUS {
   Pending
-  Approve
-  Reject
+  Approved
   Block
 }
 

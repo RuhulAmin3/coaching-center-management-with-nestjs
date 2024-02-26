@@ -102,6 +102,16 @@
 - /api/v1/teacher/:id (patch) ====> update specific teacher api endpoint.
 - /api/v1/teacher/:id (delete) ====> delete teacher api endpoint.
 
+#### Guardian Api
+
+- /api/v1/guardian (GET) ====> get all teacher api endpoint by search, filter and pagination.
+  search_query:searchTerm=guardianId&contactNo&occupation (e.g guardian?searchTerm=G-00001, searchTerm=businessman)
+  filter_query:fieldName=guardianId&gender&conatactNo&occupation&accountStatus (e.g guardian?guardianId=G-00001&occupation=farmer&accountStatus=Pending)
+
+- /api/v1/guardian/:id (GET) ====> get single guardian api endpoint.
+- /api/v1/guardian/:id (patch) ====> update specific guardian api endpoint.
+- /api/v1/guardian/:id (delete) ====> delete guardian api endpoint.
+
 <<===============================================================================>>
 
 #### Auth / User api
