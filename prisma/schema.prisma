@@ -71,10 +71,11 @@ model Teacher {
   address                  String
   shortDescription         String?
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  user      User?    @relation(fields: [userId], references: [id])
-  userId    String?  @db.ObjectId
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  user      User?     @relation(fields: [userId], references: [id])
+  userId    String?   @db.ObjectId
+  salaries  Expense[]
 
   @@map("teachers")
 }
@@ -139,6 +140,27 @@ model Exam {
   @@map("exams")
 }
 
+model Expense {
+  id               String        @id @default(auto()) @map("_id") @db.ObjectId
+  title            String
+  type             ExpenseType
+  month            MONTH
+  year             String
+  amount           Int
+  pay              Int
+  due              Int?
+  status           ExpenseStatus
+  teacherId        String?       @db.ObjectId
+  teacher          Teacher?      @relation(fields: [teacherId], references: [id])
+  date             DateTime
+  shortDescription String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("expenses")
+}
+
 type ExamSubject {
   totalMark Int
   subjectId String @db.ObjectId
@@ -165,6 +187,37 @@ type GUARDIAN {
   motherName       String
   motherOccupation String
   motherContactNo  String
+}
+
+enum MONTH {
+  January
+  February
+  March
+  April
+  May
+  June
+  July
+  August
+  September
+  October
+  November
+  December
+}
+
+enum ExpenseType {
+  Salary
+  Transport
+  Maintenance
+  Purchase
+  Breakfast
+  Events
+  Others
+}
+
+enum ExpenseStatus {
+  Paid
+  Due
+  Partial
 }
 
 enum GUARDIAN_ACCOUNT_STATUS {
