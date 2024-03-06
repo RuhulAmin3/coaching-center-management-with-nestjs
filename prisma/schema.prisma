@@ -45,10 +45,11 @@ model Student {
   address          String
   shortDescription String?
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  user      User?    @relation(fields: [userId], references: [id])
-  userId    String?  @db.ObjectId
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  user        User?        @relation(fields: [userId], references: [id])
+  userId      String?      @db.ObjectId
+  examResults ExamResult[]
 
   @@map("students")
 }
@@ -118,10 +119,11 @@ model Class {
 
   subjectIds String[] @db.ObjectId
 
-  studentIds String[] @default([]) // generating studentId by their data
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  exams      Exam[]
+  studentIds  String[]     @default([]) // generating studentId by their data
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  exams       Exam[]
+  examResults ExamResult[]
 
   @@map("classes")
 }
@@ -134,8 +136,9 @@ model Exam {
   classId  String        @db.ObjectId
   subjects ExamSubject[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  examResults ExamResult[]
 
   @@map("exams")
 }
@@ -159,6 +162,31 @@ model Expense {
   updatedAt DateTime @updatedAt
 
   @@map("expenses")
+}
+
+model ExamResult {
+  id        String              @id @default(auto()) @map("_id") @db.ObjectId
+  subjects  ExamResultSubject[]
+  studentId String              @db.ObjectId
+  student   Student             @relation(fields: [studentId], references: [id])
+  examId    String              @db.ObjectId
+  exam      Exam                @relation(fields: [examId], references: [id])
+  classId   String              @db.ObjectId
+  class     Class               @relation(fields: [classId], references: [id])
+  gpa       Float
+  grade     String
+  createdAt DateTime            @default(now())
+  updatedAt DateTime            @updatedAt
+
+  @@map("exam_results")
+}
+
+type ExamResultSubject {
+  totalMark    Int
+  obtainedMark Int
+  point        Float
+  grade        String
+  subjectId    String @db.ObjectId
 }
 
 type ExamSubject {

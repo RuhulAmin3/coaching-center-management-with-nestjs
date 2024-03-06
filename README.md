@@ -81,6 +81,19 @@
 - /api/v1/exam/:id (patch) ====> update specific exam api endpoint.
 - /api/v1/exam/:id (delete) ====> delete exam api endpoint.
 
+#### exam result Api
+
+- /api/v1/exam-result (POST) ====> create exam-result api endpoint.
+
+- /api/v1/exam-result (get) ====> get all exam-result api endpoint by search, filter and pagination.  
+  (search by grade)
+  search_query:searchTerm=grade(e.g exam-result?searchTerm=A)
+  filter_query:gpa=gpa&grade=grade&studentId=studentId&classId=classId&examId=examId (e.g exam-result?studentId=65d329bc396476d2e1eadc2a, exam-result?classId=65d81233300545d443ecf489&grade=A)
+
+- /api/v1/exam-result/:id (GET) ====> get single exam-result api endpoint.
+- /api/v1/exam-result/:id (patch) ====> update specific exam-result api endpoint.
+- /api/v1/exam-result/:id (delete) ====> delete exam-result api endpoint.
+
 #### student Api
 
 - /api/v1/student (GET) ====> get all student api endpoint by search, filter and pagination.
@@ -123,7 +136,7 @@
 - /api/v1/expense/:id (patch) ====> update specific expense api endpoint.
 - /api/v1/expense/:id (delete) ====> delete expense api endpoint.
 
-<<===============================================================================>>
+<<===========================================================================>>
 
 #### Auth / User api
 

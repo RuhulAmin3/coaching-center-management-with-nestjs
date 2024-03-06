@@ -14,6 +14,7 @@ import { StudentModule } from './modules/student/student.module';
 import { TeacherModule } from './modules/teacher/teacher.module';
 import { GuardianModule } from './modules/guardian/guardian.module';
 import { ExpenseModule } from './modules/expense/expense.module';
+import { ExamResultModule } from './modules/examResult/examResult.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { ExpenseModule } from './modules/expense/expense.module';
     TeacherModule,
     GuardianModule,
     ExpenseModule,
+    ExamResultModule,
     ConfigModule.forRoot({
       load: configuration,
       isGlobal: true,
