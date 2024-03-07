@@ -1,4 +1,10 @@
-export const queryOptions = ['searchTerm', 'title', 'description', 'authorId'];
+export const queryOptions = [
+  'searchTerm',
+  'title',
+  'description',
+  'authorId',
+  'status',
+];
 
 export const noticeRelationFields: string[] = ['authorId'];
 

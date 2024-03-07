@@ -183,10 +183,11 @@ model ExamResult {
 }
 
 model Notice {
-  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  id          String        @id @default(auto()) @map("_id") @db.ObjectId
   title       String
-  authorId    String @db.ObjectId
-  author      User   @relation(fields: [authorId], references: [id])
+  authorId    String        @db.ObjectId
+  author      User          @relation(fields: [authorId], references: [id])
+  status      NOTICE_STATUS @default(Pending)
   description String
 
   createdAt DateTime @default(now())
@@ -272,6 +273,13 @@ enum STUDENT_ACCOUNT_STATUS {
   Active
   Inacitve
   Block
+}
+
+enum NOTICE_STATUS {
+  Published
+  Archived
+  Expired
+  Pending
 }
 
 enum TEACHER_TYPE {

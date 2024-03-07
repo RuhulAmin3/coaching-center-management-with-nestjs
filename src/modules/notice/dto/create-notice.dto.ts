@@ -1,6 +1,13 @@
 import { PartialType } from '@nestjs/mapped-types';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsMongoId, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { NOTICE_STATUS } from '@prisma/client';
+import {
+  IsIn,
+  IsMongoId,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 export class CreateNoticeDTO {
   @IsNotEmpty()
@@ -16,6 +23,10 @@ export class CreateNoticeDTO {
   @IsString()
   @ApiProperty()
   description: string;
+
+  @IsIn(Object.keys(NOTICE_STATUS))
+  @IsOptional()
+  status: NOTICE_STATUS;
 }
 
 export class UpdateNoticeDTO extends PartialType(CreateNoticeDTO) {}

@@ -86,6 +86,10 @@ export class NoticeService {
                 id: filterOptions[key],
               },
             };
+          } else {
+            return {
+              [key]: filterOptions[key],
+            };
           }
         }),
       });
@@ -93,8 +97,6 @@ export class NoticeService {
 
     const finalCondition: Prisma.NoticeWhereInput =
       conditions.length > 0 ? { AND: conditions } : {};
-
-    console.log(JSON.stringify(finalCondition));
 
     const result = await this.prisma.notice.findMany({
       where: finalCondition,

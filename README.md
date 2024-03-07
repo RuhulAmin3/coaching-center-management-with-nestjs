@@ -141,7 +141,7 @@
 - /api/v1/notice (POST) ====> create notice api endpoint.
 - /api/v1/notice (GET) ====> get all notice api endpoint by search, filter and pagination.
   search_query:searchTerm=title&description (e.g notice?searchTerm=exam notice)
-  filter_query:fieldName=authorId(e.g notice?authorId=65d43425069dd2dadc694e2a)
+  filter_query:fieldName=authorId&status(e.g notice?authorId=65d43425069dd2dadc694e2a&status=Pending)
 
 - /api/v1/notice/:id (GET) ====> get single notice api endpoint.
 - /api/v1/notice/:id (patch) ====> update specific notice api endpoint.
