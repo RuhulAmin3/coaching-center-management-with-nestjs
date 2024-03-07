@@ -136,6 +136,17 @@
 - /api/v1/expense/:id (patch) ====> update specific expense api endpoint.
 - /api/v1/expense/:id (delete) ====> delete expense api endpoint.
 
+#### notice Api
+
+- /api/v1/notice (POST) ====> create notice api endpoint.
+- /api/v1/notice (GET) ====> get all notice api endpoint by search, filter and pagination.
+  search_query:searchTerm=title&description (e.g notice?searchTerm=exam notice)
+  filter_query:fieldName=authorId(e.g notice?authorId=65d43425069dd2dadc694e2a)
+
+- /api/v1/notice/:id (GET) ====> get single notice api endpoint.
+- /api/v1/notice/:id (patch) ====> update specific notice api endpoint.
+- /api/v1/notice/:id (delete) ====> delete notice api endpoint.
+
 <<===========================================================================>>
 
 #### Auth / User api

@@ -21,6 +21,7 @@ model User {
   students           Student[]
   teachers           Teacher[]
   guardians          Guardian[]
+  notices            Notice[]
 
   @@map("users")
 }
@@ -179,6 +180,19 @@ model ExamResult {
   updatedAt DateTime            @updatedAt
 
   @@map("exam_results")
+}
+
+model Notice {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  authorId    String @db.ObjectId
+  author      User   @relation(fields: [authorId], references: [id])
+  description String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("notices")
 }
 
 type ExamResultSubject {

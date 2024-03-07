@@ -15,6 +15,7 @@ import { TeacherModule } from './modules/teacher/teacher.module';
 import { GuardianModule } from './modules/guardian/guardian.module';
 import { ExpenseModule } from './modules/expense/expense.module';
 import { ExamResultModule } from './modules/examResult/examResult.module';
+import { NoticeModule } from './modules/notice/notice.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { ExamResultModule } from './modules/examResult/examResult.module';
     GuardianModule,
     ExpenseModule,
     ExamResultModule,
+    NoticeModule,
     ConfigModule.forRoot({
       load: configuration,
       isGlobal: true,
