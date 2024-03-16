@@ -147,6 +147,16 @@
 - /api/v1/notice/:id (patch) ====> update specific notice api endpoint.
 - /api/v1/notice/:id (delete) ====> delete notice api endpoint.
 
+#### Attendance Api
+
+- /api/v1/attendence (POST) ====> create attendence api endpoint.
+- /api/v1/attendence (GET) ====> get all attendence for admin view api endpoint by filter and pagination. filter_query:fieldName=month&year&classId(e.g attendence?month=January&year=2024&classId=65d70a43e5378abb4218fa3e)
+
+- /api/v1/attendence/:id (GET) ====> get single attendence api endpoint.
+- /api/v1/attendence/student/:id?month=july&year=2024 (GET) ====> get specific month attendence api endpoint for a student. (id should be student id)
+- /api/v1/attendence/:id (patch) ====> update specific attendence api endpoint.
+- /api/v1/attendence/:id (delete) ====> delete attendence api endpoint.
+
 <<===========================================================================>>
 
 #### Auth / User api

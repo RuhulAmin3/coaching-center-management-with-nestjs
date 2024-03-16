@@ -73,11 +73,12 @@ model Teacher {
   address                  String
   shortDescription         String?
 
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  user      User?     @relation(fields: [userId], references: [id])
-  userId    String?   @db.ObjectId
-  salaries  Expense[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  user        User?        @relation(fields: [userId], references: [id])
+  userId      String?      @db.ObjectId
+  salaries    Expense[]
+  attendances Attendance[]
 
   @@map("teachers")
 }
@@ -125,6 +126,7 @@ model Class {
   updatedAt   DateTime     @updatedAt
   exams       Exam[]
   examResults ExamResult[]
+  attendances Attendance[]
 
   @@map("classes")
 }
@@ -194,6 +196,28 @@ model Notice {
   updatedAt DateTime @updatedAt
 
   @@map("notices")
+}
+
+model Attendance {
+  id        String               @id @default(auto()) @map("_id") @db.ObjectId
+  classId   String               @db.ObjectId
+  class     Class                @relation(fields: [classId], references: [id])
+  month     MONTH
+  year      Int
+  date      DateTime             @unique
+  teacherId String               @db.ObjectId
+  teacher   Teacher              @relation(fields: [teacherId], references: [id])
+  students  AttendanceStudents[]
+  createdAt DateTime             @default(now())
+  updatedAt DateTime             @updatedAt
+
+  @@map("attendances")
+}
+
+type AttendanceStudents {
+  studentId String  @db.ObjectId
+  isPresent Boolean
+  name      String
 }
 
 type ExamResultSubject {

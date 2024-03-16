@@ -4,7 +4,10 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { calculatePagination } from 'src/utils/calculatePagination';
+import {
+  PaginationMetaData,
+  calculatePagination,
+} from 'src/utils/calculatePagination';
 import { Prisma } from '@prisma/client';
 import {
   examRelationalFields,
@@ -127,9 +130,11 @@ export class ExamService {
       where: finalCondition,
     });
 
-    const totalPages = Math.ceil(totalDoc / +limit);
-    const nextPage = page < totalPages ? page + 1 : null;
-    const prevPage = page > 1 ? page - 1 : null;
+    const { totalPages, nextPage, prevPage } = PaginationMetaData(
+      page,
+      totalDoc,
+      limit,
+    );
     const meta = {
       limit: limit,
       totalDoc,
