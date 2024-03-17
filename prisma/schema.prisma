@@ -51,6 +51,7 @@ model Student {
   user        User?        @relation(fields: [userId], references: [id])
   userId      String?      @db.ObjectId
   examResults ExamResult[]
+  fees        Fee[]
 
   @@map("students")
 }
@@ -79,6 +80,7 @@ model Teacher {
   userId      String?      @db.ObjectId
   salaries    Expense[]
   attendances Attendance[]
+  fees        Fee[]
 
   @@map("teachers")
 }
@@ -127,6 +129,7 @@ model Class {
   exams       Exam[]
   examResults ExamResult[]
   attendances Attendance[]
+  fees        Fee[]
 
   @@map("classes")
 }
@@ -214,6 +217,29 @@ model Attendance {
   @@map("attendances")
 }
 
+model Fee {
+  id            String      @id @default(auto()) @map("_id") @db.ObjectId
+  classId       String      @db.ObjectId
+  class         Class       @relation(fields: [classId], references: [id])
+  studentId     String      @db.ObjectId
+  student       Student     @relation(fields: [studentId], references: [id])
+  teacherId     String      @db.ObjectId
+  teacher       Teacher     @relation(fields: [teacherId], references: [id])
+  date          DateTime
+  month         MONTH
+  year          Int
+  total         Int
+  pay           Int
+  due           Int         @default(0)
+  paymentType   PaymentType @default(Offline)
+  transactionId String
+  description   String?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  @@map("fees")
+}
+
 type AttendanceStudents {
   studentId String  @db.ObjectId
   isPresent Boolean
@@ -245,6 +271,11 @@ type Name {
   firstName  String
   middleName String?
   lastName   String
+}
+
+enum PaymentType {
+  Online
+  Offline
 }
 
 type GUARDIAN {

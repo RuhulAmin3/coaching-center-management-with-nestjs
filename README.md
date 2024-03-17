@@ -157,6 +157,17 @@
 - /api/v1/attendence/:id (patch) ====> update specific attendence api endpoint.
 - /api/v1/attendence/:id (delete) ====> delete attendence api endpoint.
 
+#### fee Api
+
+- /api/v1/fee (POST) ====> create fee api endpoint.
+- /api/v1/fee (GET) ====> get all fee api endpoint by search, filter and pagination.
+  search_query:searchTerm=studentId&transactionId (e.g fee?searchTerm=SC06-EN20)
+  filter_query:fieldName=month&year&paymentType&teacherId&studentId&classId(e.g fee?month=December&year=2023&paymentType=Offline&teacherId=65d43426069dd2dadc694e2b&studentId=65d329bc396476d2e1eadc2a&classId=65d70a43e5378abb4218fa3e)
+
+- /api/v1/fee/:id (GET) ====> get single fee api endpoint.
+- /api/v1/fee/:id (patch) ====> update specific fee api endpoint.
+- /api/v1/fee/:id (delete) ====> delete fee api endpoint.
+
 <<===========================================================================>>
 
 #### Auth / User api
