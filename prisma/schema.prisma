@@ -138,6 +138,8 @@ model Exam {
   id       String        @id @default(auto()) @map("_id") @db.ObjectId
   title    String
   date     DateTime
+  month    MONTH
+  year     Int
   class    Class         @relation(fields: [classId], references: [id])
   classId  String        @db.ObjectId
   subjects ExamSubject[]

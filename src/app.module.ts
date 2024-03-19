@@ -18,6 +18,7 @@ import { ExamResultModule } from './modules/examResult/examResult.module';
 import { NoticeModule } from './modules/notice/notice.module';
 import { AttendenceModule } from './modules/attendance/attendance.module';
 import { FeeModule } from './modules/fee/fee.module';
+import { LeaderboardModule } from './modules/leaderboard/leaderboard.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { FeeModule } from './modules/fee/fee.module';
     NoticeModule,
     AttendenceModule,
     FeeModule,
+    LeaderboardModule,
     ConfigModule.forRoot({
       load: configuration,
       isGlobal: true,

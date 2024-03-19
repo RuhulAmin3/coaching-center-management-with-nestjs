@@ -80,7 +80,7 @@ export class AttendenceService {
 
     const updatedResult = result.map((atndnce) => {
       const student = atndnce.students.filter(
-        (studs) => studs.studentId === studentId,
+        (stud) => stud.studentId === studentId,
       );
       atndnce['students'] = student;
 

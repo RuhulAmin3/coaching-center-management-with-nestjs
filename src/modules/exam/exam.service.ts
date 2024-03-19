@@ -8,7 +8,7 @@ import {
   PaginationMetaData,
   calculatePagination,
 } from 'src/utils/calculatePagination';
-import { Prisma } from '@prisma/client';
+import { MONTH, Prisma } from '@prisma/client';
 import {
   examRelationalFields,
   examRelationalFieldsMapper,
@@ -18,6 +18,10 @@ import {
 export class ExamService {
   constructor(private readonly prisma: PrismaService) {}
   async createExam(data) {
+    const month = Object.keys(MONTH)[data.date.getMonth()];
+    const year = data.date.getFullYear();
+    data.month = month;
+    data.year = year;
     const result = await this.prisma.exam.create({
       data,
       include: {
@@ -85,7 +89,6 @@ export class ExamService {
         }),
       });
     }
-
     if (Object.keys(filterOptions).length > 0) {
       conditions.push({
         AND: Object.keys(filterOptions).map((key) => {
@@ -108,7 +111,6 @@ export class ExamService {
 
     const finalCondition: Prisma.ExamWhereInput =
       conditions.length > 0 ? { AND: conditions } : {};
-
     const result = await this.prisma.exam.findMany({
       where: finalCondition,
       include: {
