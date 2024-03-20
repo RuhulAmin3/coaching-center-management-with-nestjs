@@ -25,8 +25,9 @@ export class LeaderboardService {
     const leaderboardData: {
       [key: string]: {
         totalAttendence: number;
-        totalExam: number;
+        totalAttendExam: number;
         totalGpa: number;
+        rank: number;
       };
     } = {};
 
@@ -63,7 +64,8 @@ export class LeaderboardService {
       if (leaderboardData[examResult.studentId].totalGpa) {
         leaderboardData[examResult.studentId] = {
           ...leaderboardData[examResult.studentId],
-          totalExam: leaderboardData[examResult.studentId].totalExam + 1,
+          totalAttendExam:
+            leaderboardData[examResult.studentId].totalAttendExam + 1,
           totalGpa: +(
             leaderboardData[examResult.studentId].totalGpa + examResult.gpa
           ).toFixed(2),
@@ -72,15 +74,23 @@ export class LeaderboardService {
         leaderboardData[examResult.studentId] = {
           ...leaderboardData[examResult.studentId],
           totalGpa: examResult.gpa,
-          totalExam: 1,
+          totalAttendExam: 1,
         };
       }
+    });
+
+    const totalExam = await this.prisma.exam.count({
+      where: {
+        classId: queryOptions.classId,
+        month: queryOptions.month,
+        year: +queryOptions.year,
+      },
     });
 
     // converted into an array with added all response data
     const leaderboardResponseData = Object.entries(leaderboardData).map(
       ([key, value]) => {
-        const avgGpa = +(value.totalGpa / value.totalExam).toFixed(2); // avgGpa should not be round
+        const avgGpa = +(value.totalGpa / totalExam).toFixed(2); // avgGpa should not be round
         const totalAttendenceInPercentage = Math.round(
           (value.totalAttendence * 100) /
             getTotalDaysInMonth(queryOptions.month),
@@ -92,14 +102,32 @@ export class LeaderboardService {
         return {
           studentId: key,
           totalAttendence: value.totalAttendence,
+          totalAttendExam: value.totalAttendExam,
           totalAttendenceInPercentage: totalAttendenceInPercentage,
           avgGpa: avgGpa,
           avgGpaInPercentage: avgGpaInPercentage,
           performance: performance,
+          rank: null,
         };
       },
     );
 
+    // Sorting the leaderboardResponseData array based on performance in descending order
+    leaderboardResponseData.sort((a, b) => b.performance - a.performance);
+
+    // Adding rank field based on the sorted array
+    let rank = 1;
+    let prevPerformance = leaderboardResponseData[0].performance;
+    leaderboardResponseData.forEach((student, index) => {
+      if (student.performance < prevPerformance) {
+        rank = index + 1;
+        prevPerformance = student.performance;
+      }
+      student.rank = rank;
+    });
+
     return leaderboardResponseData;
   }
+
+  // async getYearlyLeaderboard(queryOptions) {}
 }

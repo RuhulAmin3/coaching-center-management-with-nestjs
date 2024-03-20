@@ -88,7 +88,7 @@ export class CreateStudentDTO {
   gender: GENDER;
 
   @IsIn(Object.keys(STUDENT_ACCOUNT_STATUS))
-  @IsNotEmpty({ message: 'status must be required' })
+  @IsOptional()
   @ApiProperty({ enum: Object.keys(STUDENT_ACCOUNT_STATUS) })
   status: STUDENT_ACCOUNT_STATUS;
 

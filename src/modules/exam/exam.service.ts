@@ -153,6 +153,14 @@ export class ExamService {
       where: {
         id,
       },
+      include: {
+        class: {
+          select: {
+            id: true,
+            className: true,
+          },
+        },
+      },
     });
 
     if (!result) {

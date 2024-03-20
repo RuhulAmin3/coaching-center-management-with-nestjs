@@ -75,7 +75,7 @@
 - /api/v1/exam (get) ====> get all exam api endpoint by search, filter and pagination.  
   (search by title, className and filter by title and classId)
   search_query:searchTerm=title&className (e.g exam?searchTerm=weekly Exam, exam?searchTerm=nine)
-  filter_query:title=title &classId=classId (e.g exam?title=Monthly Exam&classId=65d81233300545d443ecf489)
+  filter_query:title=title &classId=classId &month=month (e.g exam?title=Monthly Exam&classId=65d81233300545d443ecf489&month=January)
 
 - /api/v1/exam/:id (GET) ====> get single exam api endpoint.
 - /api/v1/exam/:id (patch) ====> update specific exam api endpoint.
