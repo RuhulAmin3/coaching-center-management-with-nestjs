@@ -11,12 +11,32 @@ export class LeaderboardController {
   @Get()
   @ApiCreatedResponse()
   @ApiOperation({ description: 'monthly leaderboard endpoints' })
-  async addAttendence(@Query() query: Record<string, any>) {
+  async monthlyLeaderboard(@Query() query: Record<string, any>) {
     const result = await this.leaderboardService.getMonthlyLeaderboard(query);
     const response = apiResponse({
       statusCode: HttpStatus.OK,
       data: result,
-      message: 'monthly leaderboard retrieved successfully',
+      message: `${query?.month} leaderboard retrieved successfully`,
+    });
+    return response;
+  }
+  @Get('/year')
+  @ApiCreatedResponse()
+  @ApiOperation({ description: 'Yearly leaderboard endpoints' })
+  async yearlyLeaderboard(
+    @Query('year') year: string,
+    @Query('classId') classId: string,
+    @Query('monthLength') monthLength: string,
+  ) {
+    const result = await this.leaderboardService.getYearlyLeaderboard(
+      +year,
+      classId,
+      +monthLength,
+    );
+    const response = apiResponse({
+      statusCode: HttpStatus.OK,
+      data: result,
+      message: `${year} leaderboard retrieved successfully`,
     });
     return response;
   }

@@ -1,3 +1,5 @@
+import { MONTH } from '@prisma/client';
+
 export function getTotalDaysInMonth(month) {
   const months = {
     January: 31,
@@ -22,4 +24,10 @@ export function getTotalDaysInMonth(month) {
   } else {
     return null; // Invalid month name
   }
+}
+
+export function getMonthsUpToIndex(index: number) {
+  const months = Object.keys(MONTH);
+  // Return the array of months up to the provided index
+  return months.slice(0, index + 1);
 }

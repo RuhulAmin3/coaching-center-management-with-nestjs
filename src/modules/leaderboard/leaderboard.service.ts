@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { getTotalDaysInMonth } from 'src/utils/getDays';
+import { getMonthsUpToIndex, getTotalDaysInMonth } from 'src/utils/getDays';
 
 @Injectable()
 export class LeaderboardService {
@@ -19,7 +19,9 @@ export class LeaderboardService {
     });
 
     if (!monthlyAttendence.length) {
-      throw new NotFoundException('leaderboard not available for the month');
+      throw new NotFoundException(
+        `leaderboard not available for ${queryOptions.month} month`,
+      );
     }
 
     const leaderboardData: {
@@ -118,9 +120,9 @@ export class LeaderboardService {
     // Adding rank field based on the sorted array
     let rank = 1;
     let prevPerformance = leaderboardResponseData[0].performance;
-    leaderboardResponseData.forEach((student, index) => {
+    leaderboardResponseData.forEach((student) => {
       if (student.performance < prevPerformance) {
-        rank = index + 1;
+        rank = rank + 1;
         prevPerformance = student.performance;
       }
       student.rank = rank;
@@ -129,5 +131,118 @@ export class LeaderboardService {
     return leaderboardResponseData;
   }
 
-  // async getYearlyLeaderboard(queryOptions) {}
+  async getYearlyLeaderboard(
+    year: number,
+    classId: string,
+    monthLength: number = 11,
+  ) {
+    // get all leaderboard data to making the average performance for the year;
+    const allMonthsLeaderboardData = await Promise.all(
+      getMonthsUpToIndex(monthLength).map(async (month) => {
+        const monthlyLeaderboard = await this.getMonthlyLeaderboard({
+          year,
+          classId,
+          month,
+        });
+
+        return {
+          classId,
+          month,
+          monthlyLeaderboard,
+        };
+      }),
+    );
+
+    const studentWiseTotalPerformance: {
+      [key: string]: {
+        totalPerformance: number;
+        finalExamGpa: number;
+        rank: number;
+      };
+    } = {};
+
+    allMonthsLeaderboardData.forEach((singleMonthLeaderboard) => {
+      singleMonthLeaderboard.monthlyLeaderboard.forEach((student) => {
+        if (studentWiseTotalPerformance[student.studentId]) {
+          studentWiseTotalPerformance[student.studentId] = {
+            ...studentWiseTotalPerformance[student.studentId],
+            totalPerformance:
+              studentWiseTotalPerformance[student.studentId].totalPerformance +
+              student.performance,
+          };
+        } else {
+          studentWiseTotalPerformance[student.studentId] = {
+            ...studentWiseTotalPerformance[student.studentId],
+            totalPerformance: student.performance,
+          };
+        }
+      });
+    });
+
+    // final exam find with classId and December month. Final exam title must be include "final" word when the exam is created.
+    const finalExam = await this.prisma.exam.findFirst({
+      where: {
+        classId,
+        month: 'December',
+        year,
+        title: {
+          contains: 'Final',
+          mode: 'insensitive',
+        },
+      },
+    });
+
+    const finalExamResult = await this.prisma.examResult.findMany({
+      where: {
+        examId: finalExam.id,
+      },
+    });
+
+    finalExamResult.forEach((result) => {
+      studentWiseTotalPerformance[result.studentId] = {
+        ...studentWiseTotalPerformance[result.studentId],
+        finalExamGpa: result.gpa,
+      };
+    });
+
+    const leaderboardResponseData = Object.entries(
+      studentWiseTotalPerformance,
+    ).map(([key, value]) => {
+      const avgPerformance = Math.round(
+        value.totalPerformance / (monthLength + 1),
+      );
+      const finalExamGpaInPercentage = Math.round(
+        (100 * value.finalExamGpa) / 5,
+      );
+      const overAllPerformance = Math.round(
+        0.3 * avgPerformance + 0.7 * finalExamGpaInPercentage,
+      );
+      return {
+        studentId: key,
+        avgPerformance: avgPerformance || 0,
+        finalExamGpa: value.finalExamGpa,
+        finalExamGpaInPercentage,
+        overAllPerformance: overAllPerformance || 0,
+        rank: null,
+      };
+    });
+
+    // Sorting the leaderboardResponseData array based on performance in descending order
+    leaderboardResponseData.sort(
+      (a, b) => b.overAllPerformance - a.overAllPerformance,
+    );
+
+    // Adding rank field based on the sorted array
+    let rank = 1;
+    let prevPerformance = leaderboardResponseData[0].overAllPerformance;
+    leaderboardResponseData.forEach((student) => {
+      if (student.overAllPerformance < prevPerformance) {
+        rank = rank + 1;
+        prevPerformance = student.overAllPerformance;
+      }
+      student.rank = rank;
+    });
+
+    return leaderboardResponseData;
+  }
 }

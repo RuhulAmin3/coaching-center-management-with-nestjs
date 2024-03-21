@@ -54,8 +54,8 @@
   filter_query:title=title (e.g class?title=mathematics)
 
 - /api/v1/subject/:id (GET) ====> get single class api endpoint.
-- /api/v1/subject/:id (patch) ====> update specific class api endpoint.
-- /api/v1/subject/:id (delete) ====> delete class api endpoint.
+- /api/v1/subject/:id (PATCH) ====> update specific class api endpoint.
+- /api/v1/subject/:id (DELETE) ====> delete class api endpoint.
 
 #### class Api
 
@@ -65,34 +65,34 @@
   filter_query:className=className (e.g class?className=nine)
 
 - /api/v1/class/:id (GET) ====> get single class api endpoint.
-- /api/v1/class/:id (patch) ====> update specific class api endpoint.
-- /api/v1/class/:id (delete) ====> delete class api endpoint.
+- /api/v1/class/:id (PATCH) ====> update specific class api endpoint.
+- /api/v1/class/:id (DELETE) ====> delete class api endpoint.
 
 #### exam Api
 
 - /api/v1/exam (POST) ====> create exam api endpoint.
 
-- /api/v1/exam (get) ====> get all exam api endpoint by search, filter and pagination.  
+- /api/v1/exam (GET) ====> get all exam api endpoint by search, filter and pagination.  
   (search by title, className and filter by title and classId)
   search_query:searchTerm=title&className (e.g exam?searchTerm=weekly Exam, exam?searchTerm=nine)
   filter_query:title=title &classId=classId &month=month (e.g exam?title=Monthly Exam&classId=65d81233300545d443ecf489&month=January)
 
 - /api/v1/exam/:id (GET) ====> get single exam api endpoint.
-- /api/v1/exam/:id (patch) ====> update specific exam api endpoint.
-- /api/v1/exam/:id (delete) ====> delete exam api endpoint.
+- /api/v1/exam/:id (PATCH) ====> update specific exam api endpoint.
+- /api/v1/exam/:id (DELETE) ====> delete exam api endpoint.
 
 #### exam result Api
 
 - /api/v1/exam-result (POST) ====> create exam-result api endpoint.
 
-- /api/v1/exam-result (get) ====> get all exam-result api endpoint by search, filter and pagination.  
+- /api/v1/exam-result (GET) ====> get all exam-result api endpoint by search, filter and pagination.  
   (search by grade)
   search_query:searchTerm=grade(e.g exam-result?searchTerm=A)
   filter_query:gpa=gpa&grade=grade&studentId=studentId&classId=classId&examId=examId (e.g exam-result?studentId=65d329bc396476d2e1eadc2a, exam-result?classId=65d81233300545d443ecf489&grade=A)
 
 - /api/v1/exam-result/:id (GET) ====> get single exam-result api endpoint.
-- /api/v1/exam-result/:id (patch) ====> update specific exam-result api endpoint.
-- /api/v1/exam-result/:id (delete) ====> delete exam-result api endpoint.
+- /api/v1/exam-result/:id (PATCH) ====> update specific exam-result api endpoint.
+- /api/v1/exam-result/:id (DELETE) ====> delete exam-result api endpoint.
 
 #### student Api
 
@@ -101,8 +101,8 @@
   filter_query:fieldName=studentId&gender&className&classRoll&schoolName&bloodGroup&admissionYear&status (e.g class?className=Eleven&admissionYear=2021)
 
 - /api/v1/student/:id (GET) ====> get single student api endpoint.
-- /api/v1/student/:id (patch) ====> update specific student api endpoint.
-- /api/v1/student/:id (delete) ====> delete student api endpoint.
+- /api/v1/student/:id (PATCH) ====> update specific student api endpoint.
+- /api/v1/student/:id (DELETE) ====> delete student api endpoint.
 
 #### Teacher Api
 
@@ -111,8 +111,8 @@
   filter_query:fieldName=teacherId&gender&email&designation&subject&conatactNo&salary&type (e.g teacher?teacherId=T-00001&type=monthly)
 
 - /api/v1/teacher/:id (GET) ====> get single teacher api endpoint.
-- /api/v1/teacher/:id (patch) ====> update specific teacher api endpoint.
-- /api/v1/teacher/:id (delete) ====> delete teacher api endpoint.
+- /api/v1/teacher/:id (PATCH) ====> update specific teacher api endpoint.
+- /api/v1/teacher/:id (DELETE) ====> delete teacher api endpoint.
 
 #### Guardian Api
 
@@ -122,8 +122,8 @@
   filter_query:fieldName=guardianId&gender&conatactNo&occupation&accountStatus (e.g guardian?guardianId=G-00001&occupation=farmer&accountStatus=Pending)
 
 - /api/v1/guardian/:id (GET) ====> get single guardian api endpoint.
-- /api/v1/guardian/:id (patch) ====> update specific guardian api endpoint.
-- /api/v1/guardian/:id (delete) ====> delete guardian api endpoint.
+- /api/v1/guardian/:id (PATCH) ====> update specific guardian api endpoint.
+- /api/v1/guardian/:id (DELETE) ====> delete guardian api endpoint.
 
 #### expense Api
 
@@ -133,8 +133,8 @@
   filter_query:fieldName=title&status&type&amount&pay&month&year&teacherId (e.g expense?title=salary for sumon sir&type=salary)
 
 - /api/v1/expense/:id (GET) ====> get single expense api endpoint.
-- /api/v1/expense/:id (patch) ====> update specific expense api endpoint.
-- /api/v1/expense/:id (delete) ====> delete expense api endpoint.
+- /api/v1/expense/:id (PATCH) ====> update specific expense api endpoint.
+- /api/v1/expense/:id (DELETE) ====> delete expense api endpoint.
 
 #### notice Api
 
@@ -144,8 +144,8 @@
   filter_query:fieldName=authorId&status(e.g notice?authorId=65d43425069dd2dadc694e2a&status=Pending)
 
 - /api/v1/notice/:id (GET) ====> get single notice api endpoint.
-- /api/v1/notice/:id (patch) ====> update specific notice api endpoint.
-- /api/v1/notice/:id (delete) ====> delete notice api endpoint.
+- /api/v1/notice/:id (PATCH) ====> update specific notice api endpoint.
+- /api/v1/notice/:id (DELETE) ====> delete notice api endpoint.
 
 #### Attendance Api
 
@@ -154,8 +154,8 @@
 
 - /api/v1/attendence/:id (GET) ====> get single attendence api endpoint.
 - /api/v1/attendence/student/:id?month=july&year=2024 (GET) ====> get specific month attendence api endpoint for a student. (id should be student id)
-- /api/v1/attendence/:id (patch) ====> update specific attendence api endpoint.
-- /api/v1/attendence/:id (delete) ====> delete attendence api endpoint.
+- /api/v1/attendence/:id (PATCH) ====> update specific attendence api endpoint.
+- /api/v1/attendence/:id (DELETE) ====> delete attendence api endpoint.
 
 #### fee Api
 
@@ -165,8 +165,15 @@
   filter_query:fieldName=month&year&paymentType&teacherId&studentId&classId(e.g fee?month=December&year=2023&paymentType=Offline&teacherId=65d43426069dd2dadc694e2b&studentId=65d329bc396476d2e1eadc2a&classId=65d70a43e5378abb4218fa3e)
 
 - /api/v1/fee/:id (GET) ====> get single fee api endpoint.
-- /api/v1/fee/:id (patch) ====> update specific fee api endpoint.
-- /api/v1/fee/:id (delete) ====> delete fee api endpoint.
+- /api/v1/fee/:id (PATCH) ====> update specific fee api endpoint.
+- /api/v1/fee/:id (DELETE) ====> delete fee api endpoint.
+
+#### leaderboard Api
+
+- /api/v1/leaderboard (GET) ====> monthly leaderboard api endpoint.
+  query:{classId, month, year}
+- /api/v1/leaderboard/year (GET) ====> yearly leaderboard api endpoint.
+  query:{classId, monthLength, year}
 
 <<===========================================================================>>
 
@@ -182,43 +189,43 @@
 - /api/v1/attendance (GET) ====> get all attendance api endpoint by search, filter and pagination.
 - /api/v1/attendance/:id (GET) ====> get single attendance api endpoint.
 - /api/v1/attendance/student/:id?month=july&year=2022 (GET) ====> get specific month attendance api endpoint for a student. (id should be student id)
-- /api/v1/attendance/:id (patch) ====> update specific attendance api endpoint.
-- /api/v1/attendance/:id (delete) ====> delete attendance api endpoint.
+- /api/v1/attendance/:id (PATCH) ====> update specific attendance api endpoint.
+- /api/v1/attendance/:id (DELETE) ====> delete attendance api endpoint.
 
 #### expense Api
 
 - /api/v1/expense (POST) ====> create expense api endpoint.
 - /api/v1/expense (GET) ====> get all expense api endpoint by search, filter and pagination.
 - /api/v1/expense/:id (GET) ====> get single expense api endpoint.
-- /api/v1/expense/:id (patch) ====> update specific expense api endpoint.
-- /api/v1/expense/:id (delete) ====> delete expense api endpoint.
+- /api/v1/expense/:id (PATCH) ====> update specific expense api endpoint.
+- /api/v1/expense/:id (DELETE) ====> delete expense api endpoint.
 
 #### guardian Api
 
 - /api/v1/guardian (GET) ====> get all guardian api endpoint by search, filter and pagination.
 - /api/v1/guardian/:id (GET) ====> get single guardian api endpoint.
-- /api/v1/guardian/:id (patch) ====> update specific guardian api endpoint.
-- /api/v1/guardian/status/:id (patch) ====> update guardian account status (pending, active, reject) api endpoint.
-- /api/v1/guardian/:id (delete) ====> delete guardian api endpoint.
+- /api/v1/guardian/:id (PATCH) ====> update specific guardian api endpoint.
+- /api/v1/guardian/status/:id (PATCH) ====> update guardian account status (pending, active, reject) api endpoint.
+- /api/v1/guardian/:id (DELETE) ====> delete guardian api endpoint.
 
 ##### student result Api
 
-- /api/v1/student/result/:id (patch) ====> add exam result api endpoint.
-- /api/v1/student/delete-result/:id (patch) ====> delete exam result api endpoint.
-- /api/v1/student/update-result/:id (patch) ====> delete exam result api endpoint.
+- /api/v1/student/result/:id (PATCH) ====> add exam result api endpoint.
+- /api/v1/student/delete-result/:id (PATCH) ====> delete exam result api endpoint.
+- /api/v1/student/update-result/:id (PATCH) ====> delete exam result api endpoint.
 
 ##### student transaction Api
 
-- /api/v1/student/transaction/:id (patch) ====> add transaction api endpoint.
-- /api/v1/student/update-transaction/:id (patch) ====> add transaction api endpoint.
-- /api/v1/student/delete-transaction/:id (patch) ====> add transaction api endpoint.
+- /api/v1/student/transaction/:id (PATCH) ====> add transaction api endpoint.
+- /api/v1/student/update-transaction/:id (PATCH) ====> add transaction api endpoint.
+- /api/v1/student/delete-transaction/:id (PATCH) ====> add transaction api endpoint.
 
 #### teacher Api
 
 - /api/v1/teacher (GET) ====> get all teacher api endpoint by search, filter and pagination.
 - /api/v1/teacher/:id (GET) ====> get single teacher api endpoint.
-- /api/v1/teacher/:id (patch) ====> update specific teacher api endpoint.
-- /api/v1/teacher/:id (delete) ====> delete teacher api endpoint.
+- /api/v1/teacher/:id (PATCH) ====> update specific teacher api endpoint.
+- /api/v1/teacher/:id (DELETE) ====> delete teacher api endpoint.
 
 #### user Api
 
