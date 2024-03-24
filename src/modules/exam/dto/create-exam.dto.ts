@@ -41,6 +41,11 @@ export class CreateExamDTO {
   @ApiProperty()
   classId: string;
 
+  @IsMongoId()
+  @IsNotEmpty()
+  @ApiProperty()
+  authorId: string;
+
   @IsNotEmpty()
   @IsArray()
   @ValidateNested({ each: true })

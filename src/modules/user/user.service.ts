@@ -23,6 +23,7 @@ export class UserService {
     file: Express.Multer.File,
     password: string | undefined | null,
   ) {
+    const soltRound = this.configService.get('JWT.bcrypt_solt_level');
     // set user data
     const userData: Prisma.UserCreateInput = {
       password: password
@@ -31,6 +32,12 @@ export class UserService {
       role: ROLE.STUDENT,
     };
 
+    // password hashed
+    const hashedPassword = await this.userUtils.hashedPassword(
+      userData.password,
+      +soltRound,
+    );
+    userData.password = hashedPassword;
     // create student new id by his own data
     const studentId = this.userUtils.generateStudentId(studentData);
     const isExistStudent = await this.prismaService.student.findUnique({
@@ -116,6 +123,14 @@ export class UserService {
       role: ROLE.TEACHER,
     };
 
+    // password hashed
+    const soltRound = this.configService.get('JWT.bcrypt_solt_level');
+    const hashedPassword = await this.userUtils.hashedPassword(
+      userData.password,
+      +soltRound,
+    );
+    userData.password = hashedPassword;
+
     const isExist = await this.prismaService.teacher.findUnique({
       where: { email: teacherData.email },
     });
@@ -166,6 +181,14 @@ export class UserService {
       role: ROLE.GUARDIAN,
       needPasswordChange: false,
     };
+
+    // password hashed
+    const soltRound = this.configService.get('JWT.bcrypt_solt_level');
+    const hashedPassword = await this.userUtils.hashedPassword(
+      userData.password,
+      +soltRound,
+    );
+    userData.password = hashedPassword;
 
     // check guardian account exist or not
     const isGuardianAccountExist = await this.prismaService.guardian.findFirst({

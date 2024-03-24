@@ -81,6 +81,7 @@ model Teacher {
   salaries    Expense[]
   attendances Attendance[]
   fees        Fee[]
+  exams       Exam[]
 
   @@map("teachers")
 }
@@ -143,6 +144,8 @@ model Exam {
   class    Class         @relation(fields: [classId], references: [id])
   classId  String        @db.ObjectId
   subjects ExamSubject[]
+  authorId String        @db.ObjectId
+  author   Teacher       @relation(fields: [authorId], references: [id])
 
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt

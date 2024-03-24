@@ -220,8 +220,8 @@ export class LeaderboardService {
       return {
         studentId: key,
         avgPerformance: avgPerformance || 0,
-        finalExamGpa: value.finalExamGpa,
-        finalExamGpaInPercentage,
+        finalExamGpa: value.finalExamGpa || 0,
+        finalExamGpaInPercentage: finalExamGpaInPercentage || 0,
         overAllPerformance: overAllPerformance || 0,
         rank: null,
       };

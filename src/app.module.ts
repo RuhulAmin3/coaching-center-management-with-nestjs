@@ -19,6 +19,9 @@ import { NoticeModule } from './modules/notice/notice.module';
 import { AttendenceModule } from './modules/attendance/attendance.module';
 import { FeeModule } from './modules/fee/fee.module';
 import { LeaderboardModule } from './modules/leaderboard/leaderboard.module';
+import { APP_GUARD } from '@nestjs/core';
+import { JwtAuthGuard } from './modules/auth/guard/jwt-auth.guard';
+import { RolesGuard } from './modules/auth/guard/roles.guard';
 
 @Module({
   imports: [
@@ -45,6 +48,16 @@ import { LeaderboardModule } from './modules/leaderboard/leaderboard.module';
     CloudinaryModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+    },
+  ],
 })
 export class AppModule {}

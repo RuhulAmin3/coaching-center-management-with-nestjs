@@ -1,7 +1,7 @@
 import { Prisma } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { Injectable } from '@nestjs/common';
-
+import bcrypt from 'bcrypt';
 @Injectable()
 export class UserUtils {
   constructor(private readonly prismaService: PrismaService) {}
@@ -56,5 +56,8 @@ export class UserUtils {
     let incrementId = (Number(currentId) + 1).toString().padStart(5, '0');
     incrementId = `G-${incrementId}`;
     return incrementId;
+  }
+  async hashedPassword(plainText: string, soltRound: number) {
+    return bcrypt.hash(plainText, soltRound);
   }
 }

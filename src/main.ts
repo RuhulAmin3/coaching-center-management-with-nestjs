@@ -4,6 +4,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { SwaggerSetup } from './swagger-setup';
 import { NestExpressApplication } from '@nestjs/platform-express';
+import * as cookieParser from 'cookie-parser';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -13,6 +14,7 @@ async function bootstrap() {
   const { port, global_prefix } = configService.get('APP');
 
   app.setGlobalPrefix(global_prefix);
+  app.use(cookieParser());
 
   app.useGlobalPipes(
     new ValidationPipe({

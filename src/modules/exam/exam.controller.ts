@@ -21,6 +21,8 @@ import { paginationOptions } from 'src/constants/paginationOptions';
 import { CreateExamDTO, UpdateExamDTO } from './dto/create-exam.dto';
 import { ExamService } from './exam.service';
 import { queryOptions } from './exam.constant';
+import { HasRoles } from '../auth/decorator/roles.decorator';
+import { ROLE } from '@prisma/client';
 
 @Controller('/exam')
 @ApiTags('Exam')
@@ -28,6 +30,7 @@ export class ExamController {
   constructor(private readonly examService: ExamService) {}
 
   @Post()
+  @HasRoles(ROLE.ADMIN, ROLE.TEACHER)
   @ApiCreatedResponse({ type: CreateExamDTO })
   @ApiOperation({ description: 'add exam endpoints' })
   async addExam(@Body() examData: CreateExamDTO) {
@@ -41,6 +44,7 @@ export class ExamController {
   }
 
   @Get()
+  @HasRoles(ROLE.ADMIN, ROLE.TEACHER)
   @ApiOkResponse({ type: [CreateExamDTO] })
   @ApiOperation({ description: 'get all exams endpoints' })
   async getExams(@Query() query: Record<string, any>) {
@@ -63,6 +67,7 @@ export class ExamController {
 
   @Get('/:id')
   @ApiOkResponse({ type: CreateExamDTO })
+  @HasRoles(ROLE.ADMIN, ROLE.TEACHER)
   @ApiOperation({ description: 'single exam get endpoints' })
   async getExam(@Param('id') id: string) {
     const result = await this.examService.getExam(id);
@@ -76,6 +81,7 @@ export class ExamController {
   }
 
   @Patch('/:id')
+  @HasRoles(ROLE.ADMIN)
   @ApiOkResponse({ type: CreateExamDTO })
   @ApiOperation({ description: 'Exam update endpoints' })
   async updateExam(@Param('id') id: string, @Body() data: UpdateExamDTO) {
@@ -89,6 +95,7 @@ export class ExamController {
   }
 
   @Delete('/:id')
+  @HasRoles(ROLE.ADMIN)
   @ApiOkResponse()
   @ApiOperation({ description: 'Exam delete endpoints' })
   async deleteExam(@Param('id') id: string) {
