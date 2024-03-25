@@ -21,9 +21,12 @@ import { paginationOptions } from 'src/constants/paginationOptions';
 import { ClassService } from './class.service';
 import { queryOptions } from './class.constant';
 import { CreateClassDTO, UpdateClassDTO } from './dto/create-class.dto';
+import { HasRoles } from '../auth/decorator/roles.decorator';
+import { ROLE } from '@prisma/client';
 
 @Controller('/class')
 @ApiTags('Class')
+@HasRoles(ROLE.ADMIN)
 export class ClassController {
   constructor(private readonly classService: ClassService) {}
 

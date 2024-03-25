@@ -21,9 +21,12 @@ import {
 import { queryPick } from 'src/utils/queryPick';
 import { paginationOptions } from 'src/constants/paginationOptions';
 import { queryOptions } from './subject.constant';
+import { HasRoles } from '../auth/decorator/roles.decorator';
+import { ROLE } from '@prisma/client';
 
 @Controller('/subject')
 @ApiTags('Subject')
+@HasRoles(ROLE.ADMIN)
 export class SubjectController {
   constructor(private readonly subjectService: SubjectService) {}
 
@@ -46,7 +49,6 @@ export class SubjectController {
   async getSubjects(@Query() query: Record<string, any>) {
     const paginationsFields = queryPick(query, paginationOptions);
     const searchOptions = queryPick(query, queryOptions);
-
     const result = await this.subjectService.getAllSubject(
       searchOptions,
       paginationsFields,

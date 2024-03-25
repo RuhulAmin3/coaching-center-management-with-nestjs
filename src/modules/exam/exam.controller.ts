@@ -26,11 +26,11 @@ import { ROLE } from '@prisma/client';
 
 @Controller('/exam')
 @ApiTags('Exam')
+@HasRoles(ROLE.ADMIN, ROLE.TEACHER)
 export class ExamController {
   constructor(private readonly examService: ExamService) {}
 
   @Post()
-  @HasRoles(ROLE.ADMIN, ROLE.TEACHER)
   @ApiCreatedResponse({ type: CreateExamDTO })
   @ApiOperation({ description: 'add exam endpoints' })
   async addExam(@Body() examData: CreateExamDTO) {
@@ -44,7 +44,6 @@ export class ExamController {
   }
 
   @Get()
-  @HasRoles(ROLE.ADMIN, ROLE.TEACHER)
   @ApiOkResponse({ type: [CreateExamDTO] })
   @ApiOperation({ description: 'get all exams endpoints' })
   async getExams(@Query() query: Record<string, any>) {
@@ -67,7 +66,6 @@ export class ExamController {
 
   @Get('/:id')
   @ApiOkResponse({ type: CreateExamDTO })
-  @HasRoles(ROLE.ADMIN, ROLE.TEACHER)
   @ApiOperation({ description: 'single exam get endpoints' })
   async getExam(@Param('id') id: string) {
     const result = await this.examService.getExam(id);

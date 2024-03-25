@@ -24,9 +24,12 @@ import {
   UpdateExamResultDTO,
 } from './dto/create-exam-result.dto';
 import { queryOptions } from './examResult.constant';
+import { HasRoles } from '../auth/decorator/roles.decorator';
+import { ROLE } from '@prisma/client';
 
 @Controller('/exam-result')
 @ApiTags('Exam Result')
+@HasRoles(ROLE.ADMIN, ROLE.TEACHER)
 export class ExamResultController {
   constructor(private readonly examResultService: ExamResultService) {}
 

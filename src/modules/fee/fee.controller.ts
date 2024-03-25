@@ -13,6 +13,7 @@ import {
   ApiCreatedResponse,
   ApiOkResponse,
   ApiOperation,
+  ApiTags,
 } from '@nestjs/swagger';
 import { queryPick } from 'src/utils/queryPick';
 import { paginationOptions } from 'src/constants/paginationOptions';
@@ -21,6 +22,7 @@ import { CreateFeeDTO, UpdateFeeDTO } from './dto/create-fee.dto';
 import { FeeService } from './fee.service';
 import { feeFilterAbleField } from './fee.constant';
 
+@ApiTags('Fee')
 @Controller('/fee')
 export class FeeController {
   constructor(private readonly feeService: FeeService) {}

@@ -8,7 +8,7 @@ import {
   Patch,
   Query,
 } from '@nestjs/common';
-import { ApiOkResponse, ApiOperation } from '@nestjs/swagger';
+import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { queryPick } from 'src/utils/queryPick';
 import { paginationOptions } from 'src/constants/paginationOptions';
@@ -20,6 +20,7 @@ import {
 } from '../user/dto/create-teacher.dto';
 import { teacherFilterAbleField } from './teacher.constant';
 
+@ApiTags('Teacher')
 @Controller('/teacher')
 export class TeacherControler {
   constructor(private readonly teacherService: TeacherService) {}

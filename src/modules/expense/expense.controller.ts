@@ -13,6 +13,7 @@ import {
   ApiCreatedResponse,
   ApiOkResponse,
   ApiOperation,
+  ApiTags,
 } from '@nestjs/swagger';
 import { queryPick } from 'src/utils/queryPick';
 import { paginationOptions } from 'src/constants/paginationOptions';
@@ -21,6 +22,7 @@ import { ExpenseService } from './expense.service';
 import { expenseFilterAbleField } from './expense.constant';
 import { CreateExpenseDTO, UpdateExpenseDTO } from './dto/create-expense.dto';
 
+@ApiTags('Expense')
 @Controller('/expense')
 export class ExpenseController {
   constructor(private readonly expenseService: ExpenseService) {}

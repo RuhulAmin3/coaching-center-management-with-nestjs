@@ -1,3 +1,4 @@
+import { HasRoles } from './../auth/decorator/roles.decorator';
 import {
   Body,
   Controller,
@@ -24,6 +25,7 @@ import {
   UpdateAttendenceDTO,
 } from './dto/create-attendance.dto';
 import { queryOptions } from './attendance.constant';
+import { ROLE } from '@prisma/client';
 
 @Controller('/attendence')
 @ApiTags('Attendence')
@@ -33,6 +35,7 @@ export class AttendenceController {
   @Post()
   @ApiCreatedResponse({ type: CreateAttendenceDTO })
   @ApiOperation({ description: 'add attendence endpoints' })
+  @HasRoles(ROLE.ADMIN, ROLE.TEACHER)
   async addAttendence(@Body() attendenceData: CreateAttendenceDTO) {
     const result = await this.attendenceService.addAttendence(attendenceData);
     const response = apiResponse({
@@ -46,6 +49,7 @@ export class AttendenceController {
   @Get()
   @ApiOkResponse({ type: [CreateAttendenceDTO] })
   @ApiOperation({ description: 'get all attendences endpoints' })
+  @HasRoles(ROLE.ADMIN)
   async getAttendenceForAdmin(@Query() query: Record<string, any>) {
     const paginationsFields = queryPick(query, paginationOptions);
     const searchOptions = queryPick(query, queryOptions);
@@ -67,6 +71,7 @@ export class AttendenceController {
   @Get('/student/:id')
   @ApiOkResponse({ type: [CreateAttendenceDTO] })
   @ApiOperation({ description: 'students get attendences endpoints' })
+  @HasRoles(ROLE.STUDENT)
   async getAttendenceForStudent(
     @Param('id') id: string,
     @Query() query: Record<string, any>,
@@ -92,6 +97,7 @@ export class AttendenceController {
   @Get('/:id')
   @ApiOkResponse({ type: CreateAttendenceDTO })
   @ApiOperation({ description: 'single attendence get endpoints' })
+  @HasRoles(ROLE.STUDENT, ROLE.ADMIN)
   async getAttendence(@Param('id') id: string) {
     const result = await this.attendenceService.getAttendence(id);
 
@@ -106,6 +112,7 @@ export class AttendenceController {
   @Patch('/:id')
   @ApiOkResponse({ type: CreateAttendenceDTO })
   @ApiOperation({ description: 'attendence update endpoints' })
+  @HasRoles(ROLE.ADMIN)
   async updateAttendence(
     @Param('id') id: string,
     @Body() data: UpdateAttendenceDTO,
@@ -122,6 +129,7 @@ export class AttendenceController {
   @Delete('/:id')
   @ApiOkResponse()
   @ApiOperation({ description: 'attendence delete endpoints' })
+  @HasRoles(ROLE.ADMIN)
   async deleteAttendence(@Param('id') id: string) {
     await this.attendenceService.deleteAttendence(id);
     const response = apiResponse({

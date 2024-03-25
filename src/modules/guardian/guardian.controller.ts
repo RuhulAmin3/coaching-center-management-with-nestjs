@@ -8,7 +8,7 @@ import {
   Patch,
   Query,
 } from '@nestjs/common';
-import { ApiOkResponse, ApiOperation } from '@nestjs/swagger';
+import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { queryPick } from 'src/utils/queryPick';
 import { paginationOptions } from 'src/constants/paginationOptions';
@@ -20,6 +20,7 @@ import {
   UpdateGuardianDTO,
 } from '../user/dto/create-guardian.dto';
 
+@ApiTags('Guardian')
 @Controller('/guardian')
 export class GuadianController {
   constructor(private readonly guradianService: GuardianService) {}

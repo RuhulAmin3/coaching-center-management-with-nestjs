@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  ForbiddenException,
   Injectable,
   NotFoundException,
   UnauthorizedException,
@@ -69,6 +70,71 @@ export class AuthService {
     } catch (error) {
       throw error;
     }
+  }
+
+  public async refreshToken(token: string) {
+    let verifiedToken = null;
+    try {
+      verifiedToken = await this.jwtService.verifyAsync(token);
+    } catch (err) {
+      throw new ForbiddenException('invalid token');
+    }
+    const { userId } = verifiedToken;
+    const isUserExist = await this.prisma.user.findUnique({
+      where: { id: userId },
+    });
+
+    if (!isUserExist) throw new NotFoundException('user does not exist');
+
+    const newAccessToken = await this.jwtService.signAsync({
+      userId: isUserExist.id,
+      role: isUserExist.role,
+    });
+
+    return { accessToken: newAccessToken };
+  }
+
+  public async updatePassword(
+    userId: string,
+    oldPassword: string,
+    newPassword: string,
+  ) {
+    const isUserExist = await this.prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+      select: {
+        password: true,
+        needPasswordChange: true,
+      },
+    });
+
+    if (!isUserExist) throw new BadRequestException('user does not exist');
+
+    const isPasswordMatched = await bcrypt.compare(
+      oldPassword,
+      isUserExist.password,
+    );
+    if (!isPasswordMatched) {
+      throw new BadRequestException('old password is incorrect');
+    }
+    const hashedPassword = await bcrypt.hash(
+      newPassword,
+      +process.env.BCRYPT_SOLT_LEVEL,
+    );
+
+    const updateUser = await this.prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        password: hashedPassword,
+        needPasswordChange: false,
+        passwordChangeAt: new Date(),
+      },
+    });
+
+    return updateUser;
   }
 
   private async verifyPassword(hashedPassword: string, textPassword: string) {

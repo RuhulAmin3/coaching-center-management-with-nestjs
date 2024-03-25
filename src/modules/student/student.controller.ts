@@ -9,7 +9,7 @@ import {
   Query,
 } from '@nestjs/common';
 import { StudentService } from './student.service';
-import { ApiOkResponse, ApiOperation } from '@nestjs/swagger';
+import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import {
   CreateStudentDTO,
   UpdateStudentDTO,
@@ -19,6 +19,7 @@ import { paginationOptions } from 'src/constants/paginationOptions';
 import { studentFilterAbleField } from './student.constant';
 import { apiResponse } from 'src/utils/api-response';
 
+@ApiTags('Student')
 @Controller('/student')
 export class StudentController {
   constructor(private readonly studentService: StudentService) {}
