@@ -7,7 +7,12 @@ import {
   Res,
   UseGuards,
 } from '@nestjs/common';
-import { LoginUserDto } from './dto';
+import {
+  ForgotPasswordDTO,
+  LoginUserDto,
+  ResetPasswordDTO,
+  UpdatePasswordDTO,
+} from './dto';
 import { AuthService } from './auth.service';
 import { ApiTags } from '@nestjs/swagger';
 import { Request, Response } from 'express';
@@ -65,21 +70,44 @@ export class AuthController {
   @Post('/update-password')
   @HasRoles(ROLE.ADMIN, ROLE.GUARDIAN, ROLE.STUDENT, ROLE.TEACHER)
   async updatePassword(
-    @Body('oldPassword') oldPassword: string,
-    @Body('newPassword') newPassword: string,
-    @Req() req: Request,
+    @Body() data: UpdatePasswordDTO,
+    @Req()
+    req: Request,
   ) {
     const { userId } = req.user;
 
     const result = await this.authService.updatePassword(
       userId,
-      oldPassword,
-      newPassword,
+      data.oldPassword,
+      data.newPassword,
     );
     const response = apiResponse({
       statusCode: HttpStatus.OK,
       data: result,
       message: 'password updated successfully',
+    });
+    return response;
+  }
+  @Post('/forgot-password')
+  @Public()
+  async forgotPassword(@Body() data: ForgotPasswordDTO) {
+    await this.authService.forgotPassword(data.id);
+    const response = apiResponse({
+      statusCode: HttpStatus.OK,
+      message: 'Check your email to get the reset link',
+    });
+    return response;
+  }
+
+  @Post('/reset-password')
+  @Public()
+  async resetPassword(@Body() data: ResetPasswordDTO, @Req() req: Request) {
+    const token = req.headers.authorization || '';
+    await this.authService.resetPassword(data.userId, data.newPassword, token);
+    const response = apiResponse({
+      statusCode: HttpStatus.OK,
+      message:
+        'Password reset successfully. Now you can login with your new password',
     });
     return response;
   }

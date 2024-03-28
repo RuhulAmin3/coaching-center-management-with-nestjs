@@ -22,6 +22,7 @@ import { LeaderboardModule } from './modules/leaderboard/leaderboard.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './modules/auth/guard/jwt-auth.guard';
 import { RolesGuard } from './modules/auth/guard/roles.guard';
+import { MailModule } from './modules/mail/mail.module';
 
 @Module({
   imports: [
@@ -46,6 +47,7 @@ import { RolesGuard } from './modules/auth/guard/roles.guard';
     }),
     PrismaModule,
     CloudinaryModule,
+    MailModule,
   ],
   controllers: [AppController],
   providers: [
