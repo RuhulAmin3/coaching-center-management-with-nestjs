@@ -185,7 +185,6 @@
 - JWT
 - Passport.Js
 - Nodemailer
-- 
 
 ## Installation
 
