@@ -181,6 +181,11 @@
 - NestJs
 - Mongodb
 - Prisma
+- swagger
+- JWT
+- Passport.Js
+- Nodemailer
+- 
 
 ## Installation
 
