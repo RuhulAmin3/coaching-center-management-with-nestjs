@@ -15,6 +15,7 @@ import { multerOptions } from 'src/common/multerOptions/multerOptions';
 import { apiResponse } from 'src/utils/api-response';
 import { CreateTeacherDTO } from './dto/create-teacher.dto';
 import { CreateGuardianDTO } from './dto/create-guardian.dto';
+import { Public } from '../auth/decorator/public.decorator';
 
 @Controller('/user')
 @ApiTags('User')
@@ -69,6 +70,7 @@ export class UserController {
   }
 
   @Post('/guardian')
+  @Public()
   @UseInterceptors(
     FileInterceptor('file', multerOptions),
     new JsonParseInterceptor('guardian'),

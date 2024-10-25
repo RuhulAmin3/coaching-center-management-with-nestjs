@@ -1,12 +1,4 @@
-import {
-  Body,
-  Controller,
-  HttpStatus,
-  Post,
-  Req,
-  Res,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, HttpStatus, Post, Req, Res } from '@nestjs/common';
 import {
   ForgotPasswordDTO,
   LoginUserDto,
@@ -16,7 +8,7 @@ import {
 import { AuthService } from './auth.service';
 import { ApiTags } from '@nestjs/swagger';
 import { Request, Response } from 'express';
-import { LocalAuthGuard } from './guard/local-auth.guard';
+// import { LocalAuthGuard } from './guard/local-auth.guard';
 import { Public } from './decorator/public.decorator';
 import { HasRoles } from './decorator/roles.decorator';
 import { ROLE } from '@prisma/client';
@@ -29,7 +21,7 @@ export class AuthController {
 
   @Post('/login')
   @Public()
-  @UseGuards(LocalAuthGuard)
+  // @UseGuards(LocalAuthGuard)
   async loginUser(
     @Body() loginUserData: LoginUserDto,
     @Res({ passthrough: true }) res: Response,

@@ -1,5 +1,5 @@
 {
-  "name": "center-management-backend-with-nestjs",
+  "name": "edu-manager-backend",
   "version": "0.0.1",
   "private": true,
   "description": "",
@@ -10,6 +10,7 @@
     "eslint:check": "eslint \"{src,apps,libs,test}/**/*.ts\"",
     "eslint:fix": "npm run eslint:check -- --fix",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "postinstall": "prisma generate",
     "lint": "npm run eslint:check && npm run prettier:check",
     "precommit": "lint-staged && npm run lint",
     "prepare": "husky install",
@@ -50,7 +51,7 @@
     "@nestjs/jwt": "^10.2.0",
     "@nestjs/mapped-types": "^2.0.5",
     "@nestjs/passport": "^10.0.3",
-    "@nestjs/platform-express": "^10.0.0",
+    "@nestjs/platform-express": "^10.4.1",
     "@nestjs/swagger": "^7.2.0",
     "@prisma/client": "^5.9.1",
     "@types/passport-jwt": "^4.0.1",
