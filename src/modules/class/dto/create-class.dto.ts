@@ -2,6 +2,7 @@ import { PartialType } from '@nestjs/mapped-types';
 import {
   ArrayMinSize,
   IsArray,
+  IsMongoId,
   IsNotEmpty,
   IsOptional,
   IsString,
@@ -14,6 +15,7 @@ export class CreateClassDTO {
 
   @IsArray()
   @IsNotEmpty({ message: 'subjects is required' })
+  @IsMongoId({ each: true, message: 'subjectIds must be a mongodb id' })
   @ArrayMinSize(1)
   subjectIds: string[];
 

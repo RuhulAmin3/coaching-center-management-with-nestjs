@@ -1,1 +1,1 @@
-export const queryOptions = ['title', 'searchTerm'];
+export const queryOptions = ['title', 'code', 'searchTerm'];

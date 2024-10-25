@@ -8,12 +8,13 @@ import {
 import { PrismaService } from '../prisma/prisma.service';
 import { Prisma } from '@prisma/client';
 import { calculatePagination } from 'src/utils/calculatePagination';
+import { CreateClassDTO } from './dto/create-class.dto';
 
 @Injectable()
 export class ClassService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async addNewClass(data) {
+  async addNewClass(data: CreateClassDTO) {
     const isExist = await this.prisma.class.findUnique({
       where: {
         className: data.className,
@@ -22,6 +23,21 @@ export class ClassService {
 
     if (isExist) {
       throw new ConflictException('class already exist');
+    }
+    const { subjectIds } = data;
+
+    // check all subject are available or not with the subjectIds
+    const foundSubjects = await Promise.all(
+      subjectIds.map((id) => this.prisma.subject.findUnique({ where: { id } })),
+    );
+
+    // Filter out null results to detect any missing subjects
+    const validSubjects = foundSubjects.filter((subject) => subject !== null);
+
+    if (validSubjects.length !== subjectIds.length) {
+      throw new NotFoundException(
+        'Some subjects not found with these subjectIds',
+      );
     }
 
     const result = await this.prisma.class.create({

@@ -12,7 +12,7 @@
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "postinstall": "prisma generate",
     "lint": "npm run eslint:check && npm run prettier:check",
-    "precommit": "lint-staged && npm run lint",
+    "precommit": "npm run prettier:write && lint-staged && npm run lint",
     "prepare": "husky install",
     "prettier:check": "prettier --check ./**/*.{ts,js,json,*rc}",
     "prettier:write": "prettier --write ./**/*.{ts,js,json,*rc}",
