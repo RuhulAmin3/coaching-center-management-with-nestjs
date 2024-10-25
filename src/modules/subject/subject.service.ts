@@ -14,7 +14,7 @@ export class SubjectService {
   async addSubject(data: Prisma.SubjectCreateInput) {
     const isExist = await this.prisma.subject.findUnique({
       where: {
-        title: data.title,
+        code: data.code,
       },
     });
 
@@ -60,12 +60,19 @@ export class SubjectService {
         })),
       });
     }
-
+    console.log('filterOptions', filterOptions);
     if (Object.keys(filterOptions).length > 0) {
       conditions.push({
-        AND: Object.entries(filterOptions).map(([field, value]) => ({
-          [field]: value,
-        })),
+        AND: Object.entries(filterOptions).map(([field, value]) => {
+          if (field == 'code') {
+            return {
+              [field]: +value,
+            };
+          }
+          return {
+            [field]: value,
+          };
+        }),
       });
     }
 

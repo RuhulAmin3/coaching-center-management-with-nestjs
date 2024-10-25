@@ -51,7 +51,7 @@
 - /api/v1/subject (POST) ====> create class api endpoint.
 - /api/v1/subject (GET) ====> get all class api endpoint by search, filter and pagination.
   search_query:searchTerm=title (e.g class?searchTerm=mathematics)
-  filter_query:title=title (e.g class?title=mathematics)
+  filter_query:title=title (e.g class?title=mathematics&code=102)
 
 - /api/v1/subject/:id (GET) ====> get single class api endpoint.
 - /api/v1/subject/:id (PATCH) ====> update specific class api endpoint.
