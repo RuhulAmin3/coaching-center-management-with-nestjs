@@ -66,6 +66,7 @@ export class CreateGuardianDTO {
   @IsNotEmpty({ message: 'account status is required' })
   @IsIn(Object.keys(GUARDIAN_ACCOUNT_STATUS))
   @ApiProperty({ enum: Object.keys(GUARDIAN_ACCOUNT_STATUS) })
+  @IsOptional()
   accountStatus: GUARDIAN_ACCOUNT_STATUS;
 
   @IsString({ message: 'address must be string' })
