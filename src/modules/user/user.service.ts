@@ -171,6 +171,7 @@ export class UserService {
     }
   }
   async createGuardian(
+    //must be check studentIds validity;
     guardianData,
     file: Express.Multer.File,
     password: string,
@@ -199,7 +200,7 @@ export class UserService {
       },
     });
 
-    // generate teacher Id
+    // generate guardian Id
     const guardianId = await this.userUtils.generateGuardianId();
 
     userData['guardianId'] = guardianId;

@@ -154,6 +154,7 @@ export class CreateStudentDTO {
   @ApiProperty()
   address: string;
 
+  @IsString({ message: 'description must be string' })
   @IsOptional()
   @ApiPropertyOptional()
   shortDescription: string;
