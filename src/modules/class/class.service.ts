@@ -197,7 +197,7 @@ export class ClassService {
         data: updatedData,
       });
 
-      //   update all the student of the class
+      // update all the student of the class
       await tsx.student.updateMany({
         where: {
           className: result.className,
@@ -208,7 +208,8 @@ export class ClassService {
       });
 
       return updateClassData;
-      //have to update student exam result and transaction history after completing both module
+      //have to update student exam result and transaction history //
+      //after completing both module //
     });
 
     // populate all the subject details by subjectids;

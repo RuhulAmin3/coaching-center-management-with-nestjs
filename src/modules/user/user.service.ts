@@ -67,10 +67,9 @@ export class UserService {
     }
 
     try {
-      // const { secure_url } =
-      //   await this.cloudinaryService.uploadImageToCloud(file);
-      studentData.image =
-        'https://res.cloudinary.com/dwykyqzzk/image/upload/v1708335326/zbsav7bbwwtvpvo70mkb.jpg';
+      const { secure_url } =
+        await this.cloudinaryService.uploadImageToCloud(file);
+      studentData.image = secure_url;
 
       const result = await this.prismaService.$transaction(async (tsx) => {
         const user = await tsx.user.create({
@@ -170,6 +169,7 @@ export class UserService {
       throw new BadRequestException(err);
     }
   }
+
   async createGuardian(
     //must be check studentIds validity;
     guardianData,

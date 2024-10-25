@@ -19,7 +19,7 @@ class ExamSubject {
   totalMark: number;
 
   @IsNotEmpty()
-  @IsMongoId()
+  @IsMongoId({ message: 'id must be mongodb Id' })
   @ApiProperty()
   subjectId: string;
 }

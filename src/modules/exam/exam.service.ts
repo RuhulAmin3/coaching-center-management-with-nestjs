@@ -183,7 +183,7 @@ export class ExamService {
     });
 
     if (!result) {
-      throw new NotFoundException('exam not found');
+      throw new NotFoundException('exam not found! try with another');
     }
     await this.prisma.exam.delete({
       where: { id },
